@@ -1,3 +1,5 @@
+
+            **************************************************** PREDAVANJE 03 **********************************************************************
 //zadaca1 Напиши програм кој како влез зема два цели броја и ги споредува. Потоа го испечатува
 //поголемиот број проследен со коментарот e pogolem od и го испечатува и помалиот број. Ако броевите се еднакви, програмот треба да испечати Broevite se ednakvi.
 #include <stdio.h>
@@ -121,3 +123,194 @@ x++;
 ++x;
 x += 1;
 x = x+1;
+
+        **************************************************** PREDAVANJE 04 **********************************************************************
+//zadaca1 
+//Модифицирај го програмот p04_01.c така да ги испуштиш break наредбите. Што се случува? Покажи пример.
+
+#include <stdio.h>
+
+int main()
+{
+   int mesec;
+
+   printf("Vnesi go mesecot so negoviot reden broj: ");
+   scanf("%d", &mesec);
+
+   switch (mesec) {
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 12:
+                printf("Ima 31 den\n");
+
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+                printf("Ima 30 dena\n");
+
+    case 2:
+                printf("Vo prestapni godini ima 29, a vo obichni 28 dena\n");
+
+    default:
+                printf("Greshen broj na mesec!\n");
+   }
+
+   return 0;
+
+}
+
+//Vnesi go mesecot so negoviot reden broj: 5
+//Ima 31 den
+//Ima 30 dena
+//Vo prestapni godini ima 29, a vo obichni 28 dena
+//Greshen broj na mesec!
+
+//Vnesi go mesecot so negoviot reden broj: 6
+//Ima 30 dena
+//Vo prestapni godini ima 29, a vo obichni 28 dena
+//Greshen broj na mesec!
+
+//Vnesi go mesecot so negoviot reden broj: 2
+//Vo prestapni godini ima 29, a vo obichni 28 dena
+//Greshen broj na mesec!
+
+// kako output go dava tocniot slucaj i se naredno vo programata
+
+// zadaca2
+//.      Модифицирај го програмот p04_02.c така да наместо да е предефинирана вредноста на променливата counter, 
+//треба на корисникот да му се овозможи тој да внесе колку ученици има во класот.
+#include <stdio.h>
+
+
+int main()
+{
+   int counter;
+   int grade;
+   int total;
+   float average; // go smeniv vo float bidejki prosekot moze da e decimalen broj
+   int n;
+
+
+   total = 0;
+   counter = 1;
+
+   printf("Vnesi broj na ucenici");
+   scanf("%d",&n);
+   while ( counter <= n ) {     
+      printf( "Vnesi ocena: " ); 
+      scanf( "%d", &grade );     
+      total = total + grade;     
+      counter = counter + 1;     
+   } 
+  
+   average = (float) total / n; 
+
+   printf( "Srednata vrednost na klasot e %.3f\n", average );
+
+   return 0; 
+
+} 
+// zadaca3 Ja vidov odkako ja resiv zadaca 2 i vidov deka mi e istata resena
+
+//zadaca4 
+//Напиши програма која ја пресметува сумата на броевите од 1 до десет.
+#include <stdio.h>
+
+
+int main()
+{
+   int n=1,zbir=0;
+   while (n <= 10){
+    zbir = zbir + n;
+   n++;
+   }
+
+   printf ("zbirot na broevite od 1 do 10 e %d",zbir);
+    return 0;
+}
+
+// zadaca5 
+//Напиши програма која за внесени десет броја, го пресметува нивниот производ.
+#include <stdio.h>
+
+
+int main()
+{
+   int n=1;
+   float a,p=0;
+   while (n <= 10){
+        printf ("vnesi broj %d ",n);
+        scanf ("%f", &a);
+        if (n == 1)
+        p = a;
+        else
+            p = p*a;
+        n++;
+   }
+
+   printf ("proizvodot na broevite e %f",p);
+
+}
+
+//zadaca6 Напиши програма која пресметува сума на внесени броеви од тастатура се додека не се внесе -1.
+#include <stdio.h>
+
+int main()
+{
+  
+   float broj;
+   float total;
+
+    total = 0;
+   
+   printf( "Vnesi broj, -1 za kraj: " );
+   scanf( "%f", &broj );
+
+
+   while ( broj != -1 ) {
+      total = total + broj;
+      
+      printf( "Vnesi broj, -1 za kraj: " );
+      scanf("%f", &broj);
+   }
+      printf( "Zbirot e %f",total );
+
+   return 0;
+
+}
+//zadaca7 Напиши програма која пресметува сума на внесени броеви од тастатура се додека не се внесе карактер ‘n’.
+#include <stdio.h>
+
+int main()
+{
+    float n;
+    char h = 'd';
+    float total = 0;
+
+
+
+    while (h == 'd'){
+
+        printf ("vnesi broj: ");
+        scanf ("%f", &n);
+        total = total +n;
+
+        printf ("Ushte ? (d/n)");
+        scanf (" %c", &h);
+
+    }
+
+    printf ("zbirot na broevite e: %f",total);
+
+
+
+   return 0;
+
+}
+
+//zadaca 8 
