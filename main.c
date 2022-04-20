@@ -15,7 +15,7 @@ int main()
         printf ("%d e pogolem od %d",broj2,broj1);
      if (broj1==broj2)
         printf ("Broevite se ednakvi");
-
+    return (0);
 
 }
 // zadaca2 Напиши програм кој вчитува два цели броја и одредува дали се парни или непарни 
@@ -37,6 +37,7 @@ int main()
         printf ("%d e paren",broj2);
     else
         printf("%d e neparen",broj2);
+    return (0);
 }
 //zadaca 3 Обидете се со спецификаторот за конверзија %d да испечатите букви на следниот начин:
 //printf(“%d”, ‘A’) /* karakteri se koristat vo edinecni navodnici */
@@ -60,7 +61,7 @@ scanf ("%f",&r);
 
 printf("perimetarot na krug so radius %f e %f\n",r,2*r*pi);
 printf("plostinata na krug si radius %f e %f\n",r,r*r*pi);
-
+return (0);
 }
 
 //zadaca 6
@@ -92,7 +93,7 @@ printf ("Vensi petta bukva\n");
 scanf  (" %c", &bukva5);
 
  printf ("%c%c%c%c%c",bukva5,bukva3,bukva2,bukva1,bukva4);
-
+return (0);
 }
 
 //zadaca7
