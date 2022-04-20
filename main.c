@@ -63,3 +63,60 @@ printf("plostinata na krug si radius %f e %f\n",r,r*r*pi);
 
 }
 
+//zadaca 6
+//Напишете програма која од стандардниот влез зема 5 букви и ги испечатува по следниот редослед: 
+//прво петтата, па третата, па втората, па првата, па четвртата буква. 
+#include <stdio.h>
+char bukva1;
+char bukva2;
+char bukva3;
+char bukva4;
+char bukva5;
+int main()
+{
+
+
+printf ("Vensi prva bukva\n");
+scanf  (" %c", &bukva1);
+
+printf ("Vensi vtora bukva\n");
+scanf  (" %c", &bukva2);
+
+printf ("Vensi treta bukva\n");
+scanf  (" %c", &bukva3);
+
+printf ("Vensi cetvrta bukva\n");
+scanf  (" %c", &bukva4);
+
+printf ("Vensi petta bukva\n");
+scanf  (" %c", &bukva5);
+
+ printf ("%c%c%c%c%c",bukva5,bukva3,bukva2,bukva1,bukva4);
+
+}
+
+//zadaca7
+//Да се модифицира задачата p03_04.c за да дава излез на променливите total  и average со три децимални места
+#include <stdio.h>
+float data[5];
+float total;
+float average;
+int main()
+{
+data[0] = 34.0;
+data[1] = 27.0;
+data[2] = 45.0;
+data[3] = 82.0;
+data[4] = 22.0;
+total = data[0] + data[1] + data[2] + data[3] + data[4];
+average = total / 5.0;
+printf("Vkupno %.3f Sredna vrednost %.3f\n", total, average);
+return (0);
+}
+
+//zadaca8
+//Напиши 4 начини за да ја зголемиш вредноста на променливата x за 1.
+x++;
+++x;
+x += 1;
+x = x+1;
