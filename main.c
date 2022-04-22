@@ -313,4 +313,252 @@ int main()
 
 }
 
-//zadaca 8 
+//zadaca 8 Една стоковна куќа продава 5 производи чии цени се дадени во долната табела
+//Да се напише програм кој чита серија од парови броеви за:
+//а) број на производ
+//б) количина продадена во текот на денот
+
+#include <stdio.h>
+
+int main()
+{
+ int proizvod,n, k=1,x=1;
+ float cena, data[5],prodaden_pati[5],vkupno=0;
+
+ while (k <= 5) {
+        printf ("vnesi broj na proizvod ");
+        scanf("%d",&proizvod);
+
+    switch (proizvod) {
+    case 1:
+    cena = 50.5;
+    break;
+    case 2:
+    cena = 45.6;
+    break;
+    case 3:
+    cena = 32.8;
+    break;
+    case 4:
+    cena = 65.3;
+    break;
+    case 5:
+    cena = 20.0;
+    break;
+  }
+    printf ("Vensi broj na prodadeni edinici: ");
+    scanf ("%d",&n);
+    prodaden_pati[proizvod]= n;
+    data[proizvod] = cena*n;
+    k++;
+ }
+    while (x <= 5){
+        printf("proizvodot so broj %d e prodaden %f pati i vkupnata suma za nego e %f\n",x,prodaden_pati[x],data[x]);
+        vkupno = vkupno + data[x];
+        x++;
+    }
+    printf ("Vkupnata prodadena vrednost e %f",vkupno);
+}
+
+//zadaca 9 Една голема хемиска компанија ги плаќа своите продавачи делумно и на процент.
+//Продавачите земаат плата од 200 евра плус 9% од вкупната нивна продажба за тој месец. 
+//На пример, ако некој продавач продал роба вредна 5000 евра, тогаш добива 200 евра плус 9% од 5000, значи вкупно 650 евра.
+//Напиши програма која за внесен месечен промет му ја пресметува платата на вработениот. Пример:
+
+#include <stdio.h>
+
+int main()
+{
+
+ float promet=0, plata=0;
+
+
+
+    while (promet != -1) {
+        printf ("Vnesi promet vo evra (-1 za kraj): ");
+        scanf ("%f",&promet);
+        plata = 200 + (promet * 9)/100;
+
+        printf ("platata e %.2f evra \n",plata);
+    }
+
+}
+
+           **************************************************** PREDAVANJE 05 **********************************************************************
+           
+ //zadaca1   Во програмот p05_02.c смести ја иницијализацијата на променливата sum во заглавието на наредбата for.
+
+#include <stdio.h>
+
+
+int main()
+{
+   int sum = 0;
+   int number;
+
+   for ( number = 2; number <= 100; sum+=number, number += 2 )
+
+
+   printf( "Sumata e %d\n", sum );
+
+   return 0;
+
+}
+
+//zadaca2     Програмот p05_03.c преработи го така да колонската репрезентација на вредностите на депозитот за секоја година биде порамнет одлево.
+
+#include <stdio.h>
+#include <math.h>
+
+
+int main()
+{
+   double amount;
+   double principal = 1000.0;
+   double rate = .05;
+   int year;
+
+
+   printf( "%s %15s\n", "Vrednost na depozitot", "Godina" );
+
+
+   for ( year = 1; year <= 10; year++ ) {
+
+
+      amount = principal * pow( 1.0 + rate, year );
+
+
+      printf( "%10.2f %25d\n", amount, year );
+   }
+
+   return 0;
+
+}
+
+// zadaca3 Да се напише програма која ќе пресметува Питагорини броеви до 100. Тоа се броеви кои го исполнуваат следниот услов a2+b2=c2.
+int main()
+{
+    int a, b, c = 0;
+    int m = 2;
+
+    while (c < 1) {
+        for (int n = 1; n < m; n++) {
+
+            a = m * m - n * n;
+            b = 2 * m * n;
+            c = m * m + n * n;
+
+            if (c > 100)
+                break;
+
+            printf("%d %d %d\n", a, b, c);
+        }
+        m++;
+    }
+}
+
+//zadaca4 Напиши програма која за внесен цел број кој може да е најмногу  четири цифрен го испечатува неговиот еквивалент во римски броеви.
+
+#include <stdio.h>
+#include <math.h>
+
+
+int main()
+{
+   int broj;
+
+   printf ("vnesi broj: ");
+   scanf("%d",&broj);
+   while (broj >= 0){
+
+        if ( broj >= 5000){
+        printf("P"); // ne mozev da go iskopiram simbolot za 5000 pa staviv P
+        broj -= 5000;
+   }
+   else if ( broj >= 4000){
+        printf("MP");
+        broj -= 4000;
+   }
+   else if ( broj >= 1000){
+        printf("M");
+        broj -= 1000;
+   }
+   else if ( broj >= 900){
+        printf("CM");
+        broj -= 900;
+   }
+   else if ( broj >= 500){
+        printf("D");
+        broj -= 500;
+   }
+   else if ( broj >= 400){
+        printf("CD");
+        broj -= 400;
+   }
+   else if ( broj >= 100){
+        printf("C");
+        broj -= 100;
+   }
+   else if ( broj >= 90){
+        printf("XC");
+        broj -= 90;
+   }
+   else if ( broj >= 50){
+        printf("L");
+        broj -= 50;
+   }
+   else if ( broj >= 40){
+        printf("XL");
+        broj -= 40;
+   }
+   else if ( broj >= 10){
+        printf("X");
+        broj -= 10;
+   }
+   else if ( broj >= 9){
+        printf("IX");
+        broj -= 9;
+   }
+   else if ( broj >= 5){
+        printf("V");
+        broj -= 5;
+   }
+   else if ( broj >= 4){
+        printf("IV");
+        broj -= 4;
+   }
+   else if ( broj >= 1){
+        printf("I");
+        broj -= 1;
+   }
+   }
+}
+
+
+// zadaca.      Напиши програм во кој контролата на циклусот на броево од 1 до 100 го прави for наредба. 
+//Во рамките на наредбата for треба да се испечати коментар дека бројот не е делив со три.
+//Доколку бројот е делив со три, не е печати никаков коментар. Задачата да се реши со користење на наредбата continue. 
+//Пример, задачата треба да печати:
+//1 ne e deliv so 3
+//2 ne e deliv so 3
+//4 ne e deliv so 3
+//...
+//100 ne e deliv so 3
+
+
+#include <stdio.h>
+#include <math.h>
+
+
+int main()
+{
+  int n;
+
+  for (n =1;n<=100;n++){
+    if (n%3 == 0)
+        continue;
+    printf ("brojot %d ne e deliv so 3\n",n);
+  }
+}
+
+
