@@ -798,9 +798,112 @@ void dzvezdi(int n)
 
 }
 
+           **************************************************** PREDAVANJE 08 **********************************************************************
+
+//zadaca 1 Напиши програм кој вчитува вредности за температури за секој ден од месецот и наоѓа средна месечна температура.
+//         Да се земе предвид дека различни месеци имаат различен број на денови
 
 
+#include<stdio.h>
 
+int main () {
+    int n,niza[31]={0},i;
+    float prosek,den,total=0;
+    char c;
+
+
+    printf ("vnesi broj na mesec(1-12): ");
+    scanf ("%d",&n);
+
+     switch (n) {
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 12:
+                den = 31;
+                break;
+
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+                den = 30;
+                break;
+    case 2:
+               {
+                    while (c != 'd' && c!= 'n'){
+                   printf ("dali e prestapna godinata? (d/n)");
+                   scanf (" %c",&c);
+
+                   if (c == 'd')
+                   den = 29;
+                   else if (c == 'n')
+                    den = 28;
+                   else
+                    printf("Obidete se povtorno \n");
+
+                   }
+               }
+               break;
+
+    default:
+                printf("Greshen broj na mesec!\n");
+     }
+    for (i=1;i<=den;i++){
+        printf ("Vnesi temperatura za den %d ",i);
+        scanf ("%d",&niza[i]);
+        total = total + niza[i];
+    }
+    prosek = total/den;
+    printf ("prosekot za mesec %d e; %.2f ",n,prosek);
+}
+
+//zadaca2 .      Прости броеви се броеви кои се деливи само со себе си и со бројот 1. Напиши програм кој внесува n елементи во низа. 
+//         Да се овозможи функционалност да имаме променлив број на елементи во низата. Во почетокот сите елементи да се иницијализираат на 1. 
+//         Потоа да се напише функција prosti која секој елемент од низата чиј индекс e прост број, 
+//         го поставува на 0. На крај од така добиената низа да се најде начин да се испечатат простите броеви до n.
+
+#include <stdio.h>
+#define SIZE 100
+int prosti(int n);
+
+int main () {
+int a[SIZE], n,i;
+scanf ("%d",&n);
+    for (i=1;i<=n; i++)
+    {
+      a[i] = 1;
+    }
+    for (i=1;i<=n;i++)
+    {
+        if(prosti(i) == 0)
+        a[i] = 0;
+        printf ("%d ",a[i]);
+    }
+     printf ("\n");
+     printf ("Prosti broevi do veneseniot broj se: ");
+     for (i=1;i<=n;i++)
+    {
+        if (a[i]==0)
+            printf (" %d ",i);
+   }
+}
+int prosti (int n) {
+    int i,pr=0;
+    if (n == 0 || n == 1)
+       pr = 0;
+    for (i=2; i<= n/2 ;i++ ){
+        if (n%i == 0)
+        {
+            pr = 1;
+            break;
+        }
+    }
+        return pr;
+}
 
 
 
