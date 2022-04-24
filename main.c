@@ -659,6 +659,155 @@ int main() {
 
 }
 
+//zadaca 3 Напиши програма која на функцијата obratno и доделува цел број. 
+//Оваа функција го враќа бројот напишан со обратни цифри, т.е. ако сме ја повикале функцијата со параметарот 1243, треба да врати 3421.
+
+#include<stdio.h>
+
+int obratno(int x){
+    int ostatok,y;
+    while ( x != 0){
+        ostatok = x%10;
+        y = y * 10 + ostatok;
+        x = x/10;
+    }
+     return y;
+}
+int main()
+{
+    int x;
+
+    printf ("Vnesi cel broj: ");
+    scanf ("%d",&x);
+
+    printf ("obratniot broj e %d ",obratno(x));
+  }
+
+//zadaca4 Напиши програма во која дефинираш функција nzd за пресметување на најголемиот заеднички делител на два броја.
+
+#include<stdio.h>
+
+int nzd(int b1, int b2){
+    int nzd,i;
+    for ( i = 1; i<=b1 && i<=b2; i++ ){
+        if ( b1%i == 0 && b2%i==0 )
+            nzd = i;
+    }
+     return nzd;
+}
+int main()
+{
+    int x,y;
+
+    printf ("Vnesi cel broj: ");
+    scanf ("%d",&x);
+    printf ("Vnesi cel broj: ");
+    scanf ("%d",&y);
+
+    printf ("nzd e %d ",nzd(x,y));
+
+   }
+
+//zadaca5  Напиши итеративна верзија на функцијата за фибоначиеви броеви
+
+
+#include <stdio.h>
+int main() {
+
+    int broj, i;
+    long zbir=0,x=0,y=1;
+
+    printf("vensi broj: ");
+    scanf ("%d",&broj);
+
+
+    for (i=0;i<broj;i++){
+
+    if (broj == 0)
+        zbir=0;
+    else if (broj == 1)
+        zbir=1;
+    else{
+        zbir = x+y;
+        x=y;
+        y=zbir;
+
+    }
+
+}
+    printf ("Fibonaci(%d) e: %ld",broj,x);
+}
+
+//zadaca6 Напиши рекурзивна верзија на функцијата за пресметување најголем заеднички делител
+ #include <stdio.h>
+
+int nzd (int b1, int b2);
+
+int main () {
+
+    int b1,b2,n;
+
+    printf ("vnesi cel broj: ");
+    scanf ("%d",&b1);
+
+    printf ("vnesi cel broj: ");
+    scanf ("%d",&b2);
+    n = nzd(b1,b2);
+
+    printf("nzd na dvata broja e: %d",n);
+}
+
+int nzd (int b1, int b2)
+{
+
+    if (b2 == 0 )
+        return b1;
+    else {
+        nzd (b2 , b1%b2);
+    }
+}
+
+//zadaca 7 Напиши рекурзивна верзија на програма која за внесено n повикува функција dzvezdi со параметар 
+//n која во зависност од n испечатува ѕвезди на следниот начин:
+//         Se dobiva:
+//         * * * * *
+//         * * * *
+//         * * *
+//         * *
+//         *
+
+#include<stdio.h>
+void dzvezdi(int n);
+int main(){
+    int n;
+    printf("vnesi broj: ");
+    scanf ("%d",&n);
+    while ( n != 0 ){
+        dzvezdi(n);
+        n--;
+        printf ("\n");
+    }
+}
+
+void dzvezdi(int n)
+{
+    if (n < 1)
+        return ;
+    printf ("* ");
+    dzvezdi(n-1);
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
