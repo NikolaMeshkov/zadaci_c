@@ -610,3 +610,57 @@ int main(void)
 
            **************************************************** PREDAVANJE 07 **********************************************************************
 
+//zadaca1 Напиши програма која внесува 10 цели броеви и и ги доделува на функцијата paren која враќа 1 ако бројот е парен и 0 ако бројот не е парен
+
+#include<stdio.h>
+
+int paren(int y){
+
+    if (y %2 == 0)
+        y = 1;
+        else
+            y=0;
+    return y;
+}
+
+int main()
+{
+    int i=0,x;
+
+    for (i=0;i<10;i++){
+        printf ("vnesi broj %d: ",i);
+        scanf ("%d",&x);
+        printf ("%d \n",paren(x));
+
+    }
+
+
+}
+
+// zadaca2 Напиши програма која на функцијата vreme и доделува три целобројни аргументи, час, минута и секунда и 
+//како резултат го враќа бројот на секунди до 12 часот. Имено, ако е 11 часот 59 минути и 58 секунди, тогаш има уште 2 секунди до 12 часот
+
+#include<stdio.h>
+
+int vreme(int c, int m, int s){
+           
+    int total;
+    total = (11-c)*3600 + (59-m)*60 + 60-s;
+    return total;
+
+}
+int main() {
+
+    int c,m,s;
+    printf ("vensi vreme vo format hh:mm:ss : ");
+    scanf ("%d%*c%d%*c%d", &c , &m, &s);
+
+    printf("Do 12 casot ima uste %d sekundi",vreme(c,m,s));
+
+}
+
+
+
+
+
+
