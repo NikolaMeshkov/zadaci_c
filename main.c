@@ -904,6 +904,43 @@ int prosti (int n) {
     }
         return pr;
 }
+//zadaca 3 Палиндроми се низи од букви што се читаат исто и оддесно на лево и одлево на десно. На пример зборот “radar” е палиндром.
+//Да се напише програм во кој внесуваме низа од карактери. 
+//Треба да имаме функција palindrom која враќа вредност 1 ако стрингот е палиндром или 0 инаку.
+
+#include<stdio.h>
+#include<string.h>
+#define SIZE 100
+void palindrom (char str[SIZE])
+{
+
+    int l = 0;
+    int h = strlen(str) - 1;
+
+
+    while (h > l)
+    {
+        if (str[l++] != str[h--])
+        {
+            printf(" 0 ", str);
+            return;
+        }
+    }
+    printf(" 1 ", str);
+}
+
+int main()
+{
+    char niz[SIZE];
+
+    printf ("Vnesi zbor ");
+    scanf ("%s",niz);
+    palindrom(niz);
+
+}
+
+
+
 
 
 
