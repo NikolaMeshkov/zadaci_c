@@ -715,8 +715,8 @@ int main()
 int main() {
 
     int broj, i;
-    long zbir=0,x=0,y=1;
-
+    long zbir=0,          
+           
     printf("vensi broj: ");
     scanf ("%d",&broj);
 
@@ -738,7 +738,8 @@ int main() {
     printf ("Fibonaci(%d) e: %ld",broj,x);
 }
 
-//zadaca6 Напиши рекурзивна верзија на функцијата за пресметување најголем заеднички делител
+//zadaca6 Напиши 
+зивна верзија на функцијата за пресметување најголем заеднички делител
  #include <stdio.h>
 
 int nzd (int b1, int b2);
@@ -936,6 +937,51 @@ int main()
     printf ("Vnesi zbor ");
     scanf ("%s",niz);
     palindrom(niz);
+
+}
+
+
+// zadaca4 Да се напише програма која во главната функција внесува број на редици и колони на дводимензионална матрица. 
+//Во функцијата vnesiMatrica внесува елементи, а преку функцијата pechatiMatrica ги печати елементите во табеларна форма.
+//а) Да се напишат итеративни верзии на двете функции.
+//б) Да се напишат рекурзивни верзии на двете функции.
+
+#include<stdio.h>
+#include<string.h>
+#define SIZE 100
+int vnesiMatrica (int n,int m){
+    int i,j,arr[SIZE][SIZE];
+    for (i=1;i<=n;i++){
+        for (j=1;j<=m;j++){
+        printf ("Vnsi element na pozicija [%d][%d]: ",i,j);
+        scanf ("%d",&arr[i][j]);
+        }
+    }
+}
+void pechatiMatrica(int n, int m)
+{
+   int i,j,arr[SIZE][SIZE];
+
+   for ( i = 1; i <= n; i++ ) {
+      for ( j = 1; j <= m; j++ ) {
+         printf( "%d ", arr[ i ][ j ] );
+      }
+      printf( "\n" );
+   }
+}
+
+int main()
+{
+    int n,m,mat[SIZE][SIZE];
+
+    printf ("Vnsi broj na redici: ");
+    scanf ("%d",&n);
+
+    printf ("Vnsi broj na koloni: ");
+    scanf ("%d",&m);
+
+    vnesiMatrica(n,m);
+    pechatiMatrica (n,m);
 
 }
 
