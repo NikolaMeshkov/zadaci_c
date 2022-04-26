@@ -996,18 +996,8 @@ int main()
 #include <stdio.h>
 #define SIZE 100
 
-int main(){
-
-    int n,i,a[SIZE],temp,j;
-
-    printf ("Vnesi broj na elementi vo nizata: ");
-    scanf ("%d",&n);
-
-     for (i = 0; i < n; i++){
-        printf ("Vnesi element: ");
-        scanf ("%d",&a[i]);
-     }
-
+int selekcija (int a[SIZE],int n){
+    int i,j,temp;
     for (i = 0; i < n; i++){
         for (j=0; j < n; j++){
             if (a[j]>a[i]){
@@ -1023,6 +1013,23 @@ int main(){
 
      }
 }
+int main(){
+
+    int n,i,a[SIZE],temp,j;
+
+    printf ("Vnesi broj na elementi vo nizata: ");
+    scanf ("%d",&n);
+
+     for (i = 0; i < n; i++){
+        printf ("Vnesi element: ");
+        scanf ("%d",&a[i]);
+     }
+
+     selekcija (a,n);
+
+}
+
+
 
 
 
