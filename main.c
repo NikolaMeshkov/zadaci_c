@@ -1029,6 +1029,140 @@ int main(){
 
 }
 
+// proekt 2 Да се модифицира програмот за делење карти така да по мешањето подели 5 карти од рака за покер. Да се одреди дали раката содржи:
+//а) пар.
+//б) два пара
+//в) трилинг (пр. три десетки)
+//г) четири карти од ист број (пр. четири асови)
+//д) боја (сите пет карти да се од иста боја, на пр, детелина)
+//ѓ) кента (5 подредени карти од иста боја, пр. 3,4,5,6,7 срце)
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void mesaj(int wDeck[][13] );
+void deli (int wDeck[][13], const char *wFace[], const char * wZnak[]);
+void raka (int wDeck[][13]);
+int main() {
+
+    const char* boja[4] = {"List","detelina","Baklava","srce"};
+    const char* brojka[13] ={ "As", "Dva", "Tri", "Chetiri", "Pet", "Shest", "Sedum", "Osum","Devet", "Deset", "Dzandar", "Dama", "Pop" };
+
+    int spil[4][13]={0};
+
+    srand(time(0));
+    mesaj(spil);
+    deli(spil,brojka,boja);
+    raka(spil);
+    return 0;
+}
+
+void mesaj(int wDeck[][13]){
+    int row,column,karta;
+
+    for (karta = 1; karta <=52;karta ++){
+        do{
+            row = rand()%4;
+            column = rand()%13;
+
+        } while (wDeck[row][column]!=0);
+        wDeck [row][column] = karta;
+    }
+
+
+}
+
+void deli (int wDeck[][13], const char * wFace[], const char * wZnak[]){
+    int card;
+    int row;
+    int column;
+
+
+
+    for (card = 1; card <=5 ; card++){
+    for (row = 0; row <= 3; row++){
+        for (column = 0; column <= 12; column++){
+            if (wDeck [row][column] == card){
+                printf ("%8s %-8s%c",wFace[ column ],wZnak[ row ], card % 2 == 0 ? '\n' : '\t');
+
+        }
+    }
+
+}
+
+}
+}
+void raka (int wDeck[][13]){
+
+    int boja[6];
+    int broj[6];
+    int card;
+    int row;
+    int column;
+    int temp;
+    int i,j;
+    int isti=1;
+    int sk = 1;
+    int tri = 0;
+
+    for (card = 1; card <=5 ; card++){
+    for (row = 0; row <= 3; row++){
+        for (column = 0; column <= 12; column++){
+            if (wDeck [row][column] == card){
+                    boja[card] = row;
+                    broj[card] = column;
+                }
+            }
+        }
+    }
+
+    for (i = 1; i <= 5; i++){
+        for (j=1; j <=5  ; j++){
+        if (boja[j] > boja[i]){
+                temp = boja[i];
+                boja[i] = boja[j];
+                boja[j] = temp;
+            }
+            if (broj[j] > broj[i]){
+                temp = broj[i];
+                broj[i] = broj[j];
+                broj[j] = temp;
+            }
+    }
+
+}
+
+         for (i = 1; i <= 5; i++){
+             if (boja[i] == boja[i+1])
+             isti++;
+             if (broj[i] == broj[i+1]-1)
+                sk++;
+            }
+            for (i = 1; i <= 5; i++){
+                for (j = 1; j <= 5; j++){
+                    if (broj[j]==broj[i] && i !=j )
+                        tri++;
+                }
+            }
+
+        printf ("\n");
+         if (isti == 5)
+            printf ("Vo rakata ima boja");
+         if (sk == 5 )
+            printf ("Vo rakata ima kenta");
+        if (tri == 2)
+            printf ("Vo rakata ima par");
+        if (tri == 4)
+            printf ("Vo rakata ima dva para");
+        if (tri == 6)
+            printf ("Vo rakata ima triisti");
+        if (tri == 12)
+            printf ("Vo rakata ima cetiri isti");
+}
+
+
 
 
 
