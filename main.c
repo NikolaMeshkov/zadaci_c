@@ -1165,6 +1165,145 @@ void raka (int wDeck[][13]){
             printf ("Vo rakata ima cetiri isti");
 }
 
+//Проект 3. Да се изработи до понеделник 29.01.2007
+//Да се направи програма во која ќе се сместат оцени на студенти по предмети (дводимензионална низа во која во редици се студентите, а во колони се нивните оцени по 5 предмети). 
+//Програмата треба да го нуди следниот кориснички посредник:
+ 
+//Vnesi izbor:
+//0 Ispechati ja nizata so oceni
+//1 Najdi ja maksimalnataocena
+//2 Najdi ja minimalnata ocena
+//3 Ispecati ja prosechnata ocena za sekoja student
+//4 Kraj
+ 
+//Програмата да се реши со користење на покажувачи до функциите max, min, pecatiNiza, рrosek.
+//Покажувачите кон четирите функции да се сместат во низата obrabotiOceni, а како индекс за повикување на секоја од функкциите да се користи изборот од
+//корисничкото мени.
+ 
+//Забелешка: Една рестрикција при користење на покажувачи кон функции е што сите функции мора да се од ист тип.
+//Покажувачите мора да се со иста повратна вредност и да примаат аргументи од ист тип. 
+//Наједноставно би било кога ниту една од функциите нема да враќа вредност, но ќе печати вредности, а како аргумент би се предавале оцени за еден студент.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define SIZE 30
+
+void pecatiNiza (int a[][7], int n);
+void max (int a[][7],int n);
+void min (int a[][7],int n);
+void prosek (int a[][7],int n);
+int main () {
+        int n, izbor;
+        int a[SIZE][7];
+        int i,j;
+        printf ("Vnesi broj na studenti: ");
+        scanf ("%d",&n);
+
+        for (i = 2;i <= n+1; i++){
+            for (j = 2;j <= 6 ;j++){
+                printf ("Vnesi ocena %d za student %d: ",j-1,i-1);
+                scanf ("%d",&a[i][j]);
+
+            }
+        }
+
+       void (*obrabotiOceni[4])(int a[][7] , int n ) = {pecatiNiza,max,min,prosek};
+
+        printf ("Vnesi izbor: \n0 Ispechati ja nizata so oceni \n1 Najdi ja maksimalnataocena\n2 Najdi ja minimalnata ocena\n3 Ispecati ja prosechnata ocena za sekoja student\n4 Kraj \n");
+       scanf ("%d",&izbor);
+       while (izbor >= 0 && izbor <=3){
+        (*obrabotiOceni[izbor])(a,n);
+         printf ("Vnesi izbor: \n0 Ispechati ja nizata so oceni \n1 Najdi ja maksimalnataocena\n2 Najdi ja minimalnata ocena\n3 Ispecati ja prosechnata ocena za sekoja student\n4 Kraj \n");
+       scanf ("%d",&izbor);
+       }
+       printf ("Izvrshuvanjeto zavrshi !!! ");
+       return 0;
+
+}
+
+void pecatiNiza (int a[][7], int n){
+    int i,j;
+    for(i=1; i<= n+1; i++){
+            for (j=1; j<=6; j++)
+            {
+                if ( i == 1 ){
+                    if (j == 1){
+                        printf ("Student \t");
+                    }
+                    if (j > 1){
+                        printf ("predmet %d\t",j-1);
+                    }
+                }
+                if ( i > 1 && j==1){
+                    printf ("Student %d\t",i-1);
+                }
+                if ( i >= 2 && j >= 2){
+                printf ("%d \t\t",a[i][j]);
+            }
+            }
+            printf ("\n");
+         }
+
+}
+void max (int a[][7], int n) {
+     int i,j,najgolem=0,st,pr;
+    for(i=2; i<= n+1; i++){
+            for (j=2; j<=6; j++){
+                if (a[i][j] > najgolem){
+                    najgolem = a[i][j];
+                    st = i;
+                    pr = j;
+                }
+
+            }
+
+            printf ("\n");
+         }
+        printf ("Najvisoka ocena ima studentot %d po predmet %d",st-1,pr-1);
+}
+void min (int a[][7], int n) {
+     int i,j,najgolem=10,st,pr;
+    for(i=2; i<= n+1; i++){
+            for (j=2; j<=6; j++){
+                if (a[i][j] < najgolem){
+                    najgolem = a[i][j];
+                    st = i;
+                    pr = j;
+                }
+
+            }
+
+            printf ("\n");
+         }
+        printf ("Najniska ocena ima studentot %d po predmet %d \n",st-1,pr-1);
+}
+
+void prosek (int a[][7], int n) {
+     int i,j;
+     float prosek =0,zbir=0;
+    for(i=2; i<= n+1; i++){
+            for (j=2; j<=6; j++){
+                    if (j == 2){
+                        zbir = 0;
+                        prosek = 0;
+                        }
+                    zbir = zbir + a[i][j];
+                }
+                    prosek = zbir/5;
+                    printf ("prosek za student %d e: %.2f \n",i-1,prosek);
+
+            }
+
+
+}
+
+
+
+
+
+
+
 
 
 
