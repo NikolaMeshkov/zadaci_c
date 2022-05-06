@@ -1381,10 +1381,68 @@ int main(){
 }
 
 
+            **************************************************** PREDAVANJE 12 **********************************************************************
 
 
+//1. Само со користење на операторот за шифтирање да се напише функција mnoziSoStepenOdDva која зема два целобројни аргументи:
+//broj и stepen и ја пресметува следната вредност:
+//broj * 2^stepen;
+
+#include <stdio.h>
+void mnoziSoStepenOdDva( unsigned br, unsigned st, unsigned rez );
+int main()
+{
+   unsigned broj,stepen,rezultat;
+    printf("Vnesi broj: ");
+    scanf ("%u",&broj);
+    printf ("Vnesi stepen: ");
+    scanf ("%u",&stepen);
+    mnoziSoStepenOdDva(broj,stepen,rezultat = broj << stepen);
+}
+void mnoziSoStepenOdDva( unsigned br, unsigned st, unsigned rez)
+{
+   unsigned c,d;
+
+   unsigned pechatiMaska = 1 << 31;
 
 
+      printf( "%7u = ", br );
+
+   for ( c = 1; c <= 32; c++ ) {
+      putchar( br & pechatiMaska ? '1' : '0' );
+      br <<= 1;
+
+      if ( c % 8 == 0 ) {
+         putchar( ' ' );
+      }
+   }
+   putchar( '\n' );
+
+    printf( "%7u = ", st );
+
+
+   for ( c = 1; c <= 32; c++ ) {
+      putchar( st & pechatiMaska ? '1' : '0' );
+      st <<= 1;
+
+      if ( c % 8 == 0 ) {
+         putchar( ' ' );
+      }
+   }
+    putchar( '\n' );
+   printf ("broj * 2^ stepen = ",br,st);
+   printf( "%7u = ", rez );
+
+      for ( c = 1; c <= 32; c++ ) {
+      putchar( rez & pechatiMaska ? '1' : '0' );
+      rez <<= 1;
+
+      if ( c % 8 == 0 ) {
+         putchar( ' ' );
+      }
+   }
+     putchar( '\n' );
+}
 
 
 
