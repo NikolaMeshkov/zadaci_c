@@ -1444,8 +1444,70 @@ void mnoziSoStepenOdDva( unsigned br, unsigned st, unsigned rez)
      putchar( '\n' );
 }
 
+// zadaca 2  Напиши програм кој го превртува редоследот на битовите на целобројна unsigned вредност.
+//Програмот треба да вчита вредност од корисникот и да ја повика функцијата prevtriBitovi за да се испечатат битовите во обратен редослед. 
+//Вредностите на битовите да се испечатат и пред и после превртувањето.
 
-// zadaca 3 3. Да се открие и опише што работи следниот програм?
+#include<stdio.h>
+#include<math.h>
+void prevrtiBitovi (unsigned br, unsigned br2);
+
+int main () {
+
+    unsigned n;
+
+    printf ("vnesi broj: ");
+    scanf ("%u", &n);
+
+
+    prevrtiBitovi(n,n);
+
+
+}
+
+void prevrtiBitovi (unsigned br, unsigned br2){
+
+    unsigned c;
+    unsigned rev=0;
+    unsigned maska = 1<<31;
+
+     printf ("%10u = ", br2);
+
+    for(c=1; c <=32 ; c++){
+        putchar( br2 & maska ? '1' : '0');
+        br2 <<= 1;
+
+        if(c%8 == 0)
+            putchar(' ');
+    }
+    putchar ('\n');
+
+   while (br > 0)
+    {
+
+        rev <<= 1;
+
+
+        if (br & 1 == 1)
+            rev ^= 1;
+
+
+        br >>= 1;
+
+    }
+    printf ("%10u = ", rev);
+
+    for(c=1; c <=32 ; c++){
+        putchar( rev & maska ? '1' : '0');
+        rev <<= 1;
+
+        if(c%8 == 0)
+            putchar(' ');
+    }
+    putchar ('\n');
+   }
+
+// zadaca 3  Да се открие и опише што работи следниот програм?
 /* Program vezba11_01.c
    Shto raboti sledniot program?
 #include <stdio.h>
@@ -1475,7 +1537,7 @@ int misterija( unsigned bitovi )
    return !( total % 2 ) ? 1 : 0;
 } */
 
-// vrakja dali zbirot na edinicite vo brojot e paren ili nepare, za paren 1 za neparen 0
+// vrakja dali zbirot na edinicite vo brojot e paren ili nepare, za paren 1 za neparen 0 , pr 7 = 111 1+1+1=3 rezultat neparen(0), 9 = 1001 1+1=2 rezultat paren (1)
 
 
 
