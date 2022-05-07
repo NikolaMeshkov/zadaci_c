@@ -1540,6 +1540,229 @@ int misterija( unsigned bitovi )
 // vrakja dali zbirot na edinicite vo brojot e paren ili nepare, za paren 1 za neparen 0 , pr 7 = 111 1+1+1=3 rezultat neparen(0), 9 = 1001 1+1=2 rezultat paren (1)
 
 
+            **************************************************** PREDAVANJE 12_2 **********************************************************************
+
+//zadaca1. 1. Вие сте сопственик на продавница за компјутерска опрема. Треба да си направите апликација која ќе се грижи за хардверот што го имате на располагање
+// количината на секој од деловите во продавницата и цените на деловите. Напишете програма која иницијализира датотека “hardware.dat”, 
+//ви овозможува да внесете податоци за секој дел, да ги излистате податоците за специфичен дел, да дадете комплетен листинг на состојбата во вашата продавница,
+//да избришете податоци за даден дел ако тој веќе го немате на лагер, да ажурирате податоци за даден дел и да правите продажба.
+//Под продажба се подразбира намалување на бројот на потребни делови од датотеката, доколку има толку делови, колку што бара купецот. 
+//Да претпоставиме дека имаме оптички читач на касата и дека секој дел се вчитува со негов код. 
+
+//За започнување со работа, користете ги следните информации:
+//Код 	Име на дел	Количина	Цена
+//3	glusec Mico	7	10.34
+//56	monitor Kiki3	5	65.09
+//75	tastatura Biko8	4	12.09
+//89	matploc Ziko32	6	87.09
+
+
+/* Program p12_07.c
+   Ovoj program chita od sluchajna datoteka, azhurira podatoci
+   koi vekje postojat vo datotekata, sozdava novi podatoci
+   koi treba da se smestat vo datotekata i brishe prethodno
+   smesteni podatoci od datotekata */
+
+#include <stdio.h>
+
+struct hardwareData {
+    int Cod;
+    char Opis[20];
+    int Kol;
+    double Cena;
+};
+
+int vnesiIzbor(void);
+void vnesiPodatoci (FILE *fPtr);
+void vidiPodatoci (FILE *fPtr);
+void kompletPopis ( FILE *readPtr );
+void izbrisiPodatoci (FILE *fPtr);
+void azurirajPodatoci (FILE *fPtr);
+
+
+int main () {
+    FILE *cfPtr;
+    int izbor;
+    struct hardwareData hd = {0,"",0,0.0};
+
+    if ((cfPtr = fopen ("hardware.dat","rb+")) == NULL)
+        printf ("Datotekata ne moze da se otvori \n");
+    else {
+
+        while ((izbor = vnesiIzbor()) != 6) {
+            switch (izbor) {
+
+            case 1:
+                vnesiPodatoci(cfPtr);
+                break;
+
+            case 2:
+                vidiPodatoci(cfPtr);
+                break;
+
+            case 3:
+                kompletPopis(cfPtr);
+                break;
+
+            case 4:
+                izbrisiPodatoci(cfPtr);
+                break;
+            case 5:
+                azurirajPodatoci(cfPtr);
+                break;
+            case 6:
+
+
+            default :
+                printf ("Gresen izbor!!\n");
+                break;
+
+
+            }
+        }
+        fclose(cfPtr);
+    }
+    return 0;
+}
+
+int vnesiIzbor (void)
+{
+    int izbormeni;
+
+    printf ("\n Vnesi Izbor \n 1 - Vnesi podatoci \n 2 - Vidi podatoci za del \n 3 - Lista na sostojba vo prodavnica \n 4 - Izbrishi del \n 5 - Azuriraj del \n 6 -  Kraj \n ");
+    scanf ("%d",&izbormeni);
+    return izbormeni;
+}
+void vnesiPodatoci (FILE *fPtr)
+{
+    int kodProizvod;
+
+   struct hardwareData hd = {0,"",0,0.0};
+
+   printf ("Vnesi kod za nov proizvod: ");
+   scanf ("%d",&kodProizvod);
+
+
+
+   fseek (fPtr, (kodProizvod-1) * sizeof (struct hardwareData ),SEEK_SET);
+   fread (&hd ,sizeof (struct hardwareData) ,1 ,fPtr);
+
+   if (hd.Cod != 0){
+        printf ("Proizvodot %d veke postoi.\n",hd.Cod);
+   }
+   else {
+      printf ("Vnesi opis,kolicina i cena");
+      scanf ("%s%d%lf",&hd.Opis,&hd.Kol,&hd.Cena);
+      hd.Cod = kodProizvod;
+
+       fseek (fPtr, (hd.Cod -1)*sizeof (struct hardwareData ),SEEK_SET);
+       fwrite (&hd,sizeof (struct hardwareData),1,fPtr);
+
+    }
+}
+void vidiPodatoci (FILE *fPtr){
+int kodProizvod;
+
+   struct hardwareData hd = {0,"",0,0.0};
+
+   printf ("Vnesi kod za nov proizvod: ");
+   scanf ("%d",&kodProizvod);
+
+   fseek (fPtr, (kodProizvod-1)*sizeof (struct hardwareData ),SEEK_SET);
+   fread (&hd,sizeof (struct hardwareData),1,fPtr);
+   if (hd.Cod == 0)
+        printf ("Proizvodot %d go nema.\n",kodProizvod);
+   else {
+        printf( "%-8s%-16s%-11s%10s\n",
+         "Kod", "Opis", "Kolicina","Cena" );
+    printf ("%-8d%-16s%-11d %10.2f \n\n",hd.Cod,hd.Opis,hd.Kol,hd.Cena);
+}
+}
+void kompletPopis ( FILE *readPtr )
+{
+   FILE *writePtr;
+   struct hardwareData hd = { 0, "", 0, 0.0 };
+
+   if ( ( writePtr = fopen( "hardware.txt", "w" ) ) == NULL ) {
+      printf( "Datotekata ne mozhe da se otvori.\n" );
+   }
+   else {
+      rewind( readPtr );
+      fprintf( writePtr, "%-8s%-16s%-11s%10s\n",
+         "Kod", "Opis", "Kolicina","Cena" );
+
+
+      while ( !feof( readPtr ) ) {
+         fread( &hd, sizeof( struct hardwareData ), 1, readPtr );
+
+
+         if ( hd.Cod != 0 ) {
+            fprintf( writePtr, "%-8d%-16s%-11d%10.2f\n",
+               hd.Cod, hd.Opis,
+               hd.Kol, hd.Cena );
+         }
+      }
+
+      fclose( writePtr );
+   }
+
+}
+void izbrisiPodatoci (FILE *fPtr){
+
+    int vnes;
+
+    struct hardwareData hd ;
+    struct hardwareData blankHd = {0,"",0,0.0};
+
+    printf ("Vnesi kod za del: ");
+    scanf ("%d",&vnes);
+
+    fseek (fPtr, (vnes - 1) * sizeof (struct hardwareData),SEEK_SET );
+    fread (&hd,sizeof (struct hardwareData),1,fPtr);
+
+    if (hd.Cod == 0){
+        printf ("Nema takov proizvod. ");
+    }
+    else {
+        fseek (fPtr, (vnes - 1) * sizeof (struct hardwareData),SEEK_SET );
+        fwrite (&blankHd,sizeof (struct hardwareData),1,fPtr);
+
+    }
+}
+void azurirajPodatoci (FILE *fPtr){
+
+    int vnes;
+    int koli;
+
+    struct hardwareData hd;
+
+    printf ("Vnesi kod za proizvod za koj treba da se promenat podatoci: ");
+    scanf ("%d",&vnes);
+
+    fseek (fPtr,(vnes -1 )*sizeof (struct hardwareData),SEEK_SET);
+    fread (&hd, sizeof (struct hardwareData),1,fPtr);
+
+    if (hd.Cod == 0){
+        printf ("Nema proizvod so kod %d.\n",vnes);
+    }
+    else {
+          printf( "Vnesi priem na edinici proizvod (+) ili prodazba (-): ");
+          scanf ("%d",&koli);
+          hd.Kol += koli;
+          printf ("Nova sostojba za proizvodot: \n");
+          printf( "%-8d%-16s%-11d%10.2f\n",
+               hd.Cod, hd.Opis,
+               hd.Kol, hd.Cena );
+    fseek (fPtr,(vnes -1)*sizeof (struct hardwareData),SEEK_SET);
+    fwrite (&hd,sizeof (struct hardwareData),1,fPtr);
+
+
+            }
+}
+
+
+
+
 
 
 
