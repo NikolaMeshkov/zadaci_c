@@ -1557,11 +1557,7 @@ int misterija( unsigned bitovi )
 //89	matploc Ziko32	6	87.09
 
 
-/* Program p12_07.c
-   Ovoj program chita od sluchajna datoteka, azhurira podatoci
-   koi vekje postojat vo datotekata, sozdava novi podatoci
-   koi treba da se smestat vo datotekata i brishe prethodno
-   smesteni podatoci od datotekata */
+
 
 #include <stdio.h>
 
