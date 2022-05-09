@@ -1757,9 +1757,58 @@ void azurirajPodatoci (FILE *fPtr){
 }
 
 
+           **************************************************** PREDAVANJE 01 od CPP **********************************************************************
+// zadaca 1 
+
+#include <iostream>
+
+using std :: cout;
+using std :: cin;
+using std :: endl;
+
+inline double circleArea (const double r) {return r*r*3.14;}
+
+int main()
+{
+
+    double n;
+    cout << "vnesi broj" << endl;
+    cin >> n ;
+    cout << "broj = " << circleArea(n) << endl;
+    return 0;
+}
 
 
+// zadaca2 #include <iostream>
 
+using std :: cout;
+using std :: cin;
+using std :: endl;
+
+int trippleCallbyValue (int);
+void trippleCallByReference (int &);
+
+int main()
+{
+
+    int n;
+    cout << "vnesi broj" << endl;
+    cin >> n ;
+    cout << "broj (by value) = " << trippleCallbyValue(n) << endl;
+    trippleCallByReference (n);
+    cout << "broj (by reference) = "<< n << endl;
+    return 0;
+}
+
+int trippleCallbyValue (int br)
+{
+    br = br*3;
+    return br;
+}
+void trippleCallByReference (int &brRef){
+    brRef = brRef*3;
+
+}
 
 
 
