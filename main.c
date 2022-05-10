@@ -1810,7 +1810,7 @@ void trippleCallByReference (int &brRef){
 
 }
 
-           **************************************************** PREDAVANJE 01 od CPP **********************************************************************
+           **************************************************** PREDAVANJE 02 od CPP **********************************************************************
            
                       
                       #include<iostream>
@@ -1848,6 +1848,163 @@ int main () {
 
 
 }
+
+            **************************************************** PREDAVANJE 03 od CPP **********************************************************************
+
+//zadaca1. 1. Да се формира класа Квадар (скриени елементи: должина, ширина и висина; јавни функции: плоштина, волумен). 
+//Од неа да се имплементира поле од објекти. Да се најде оној кој има најмала плоштина, а не е коцка. Да се креира мени:
+//a)	Креирај нов објект
+//b)	Постави ги димензиите
+//c)	Печати ги димензиите на сите објекти
+//d)	Печати ги димензиите за поедин објект
+//e)	Печати ги оние кои го задоволуваат условот
+
+#include<iostream>
+#define SIZE 100
+using namespace std;
+
+class Kvadar {
+ private :
+     int dolzina;
+     int shirina;
+     int visina;
+
+public :
+
+    void setDolzina (int dol){
+        dolzina = dol;
+    }
+    int getDolzina () {
+        return dolzina;
+    }
+     void setShirina (int shi){
+        shirina = shi;
+    }
+    int getShirina () {
+        return shirina;
+    }
+     void setVisina (int vis){
+        visina = vis;
+    }
+    int getVisina () {
+        return visina;
+    }
+
+
+    int plostina () {
+        return 2*(dolzina+shirina+visina);
+    }
+    int volumen (){
+        return dolzina*shirina*visina;
+    }
+    void kreirajObjekt();
+    bool Kocka () {
+        return (dolzina == shirina) && (dolzina == visina) && (shirina == visina);
+    }
+
+};
+void Kvadar::kreirajObjekt () {
+
+    int d,s,v;
+
+    cout << "Vnesi dolzina " << endl;
+    cin >> d;
+    setDolzina(d);
+    cout << "Vnesi shirina " << endl;
+    cin >> s;
+    setShirina(s);
+    cout << "Vnesi visina" << endl;
+    cin >> v;
+    setVisina(v);
+
+}
+
+void pecatiObjekt(Kvadar *kv) {
+    int i;
+    cout << "vnesi indeks na objekt za pecatenje: " << endl;
+    cin >> i;
+    cout << "ind " << "dol " << "shir " << "vis " << endl;
+    if (kv[i].plostina() != 0 )
+    {
+        cout << i << "    " << kv[i].getDolzina() << "    " << kv[i].getShirina() << "    "<< kv[i].getVisina() << endl;
+    }
+    else
+    {
+        cout << " Nema objekt so takov indeks" << endl;
+    }
+}
+
+void ispecatiSite(Kvadar *kv, int i ) {
+
+    cout << "ind " << "dol " << "shir " << "vis " << endl;
+    for (i = 0; i <= 99; i++){
+        if (kv[i].plostina() != 0){
+            cout << i << "    " << kv[i].getDolzina() << "    "<< kv[i].getShirina() << "    " << kv[i].getVisina() <<endl;
+        }
+    }
+}
+
+void pecatiNajmalObjekt(Kvadar *kv){
+int i,ind;
+
+for (i=1;i <= 99;i++){
+        if (kv[i].plostina() != 0 )
+            ind = i;
+    if (kv[i].plostina() !=0 && !kv[i].Kocka()  && kv[i].volumen() < kv[ind].volumen())
+        ind = i;
+}
+     cout << "ind " << "dol " << "shir " << "vis " << endl;
+     cout << ind << "    " << kv[ind].getDolzina() << "    "<< kv[ind].getShirina() << "    " << kv[ind].getVisina() <<endl;
+}
+int main () {
+
+Kvadar kv[SIZE];
+ int vnes=10,ind,i;
+for (i=0;i<=100;i++){
+    kv[i].setVisina(0);
+    kv[i].setDolzina(0);
+    kv[i].setShirina(0);
+}
+
+
+   while (vnes != 0){
+    cout << "Meni: " << endl;
+    cout << "0 - Kraj" << endl;
+    cout << "1 - Kreiraj nov objekt" << endl;
+    cout << "2 - Ispecati gi site objekti " << endl;
+    cout << "3 - Ispecati poedinecen objekt po indeks" << endl;
+    cout << "4 - Pecati objekt koj go zadovoluva uslvovot (najmal a da ne e kocka)" << endl;
+     cin >> vnes;
+
+    switch (vnes) {
+            case 1:
+            cout << "vnesi indeks za noviot objekt: " << endl;
+            cin >> ind;
+            if (kv[ind].plostina() != 0){
+                cout << "veke ima objekt so toj indeks" << endl;
+                }
+                else
+            kv[ind].kreirajObjekt();
+            break;
+
+            case 2:
+            ispecatiSite(kv, ind);
+            break;
+
+            case 3:
+            pecatiObjekt(kv);
+            break;
+
+            case 4:
+            pecatiNajmalObjekt(kv);
+
+
+                }
+
+        }
+
+   }
+
 
 
 
