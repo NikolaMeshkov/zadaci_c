@@ -2006,6 +2006,224 @@ for (i=0;i<=100;i++){
    }
 
 
+//zadaca 2 2. Да се направи програма која ќе ја користи класата Штедач и ќе овозможи: 
+//a)	Внесување на нов штедач во системот
+//b)	Приказ на податоците
+//c)	Уплата на средства
+//d)	Исплата на средства (со контрола дали е можна таква исплата)
+//e)	Приказ на салдото за даден штедач
+//class Stedac
+//{
+ //public:
+  //      void vnesi_podatoci();
+  //      void prikazi_podatoci();
+  //      void uplata(unsigned long i);
+  //      void isplata(unsigned long i);
+  //      long sostojba();
+
+ // private:
+  //      int broj;
+  //      char imeprezime[30], adresa[50];
+  //      long saldo;
+
+
+#include<iostream>
+#include<string.h>
+#include<iomanip>
+#include <string>
+#define SIZE 100
+using namespace std;
+
+class Stedac {
+ private :
+     int broj;
+     char imeprezime[30],adresa[50];
+     long saldo;
+
+public :
+
+    void setBroj (int br){
+        broj = br;
+    }
+    int getBroj () {
+        return broj;
+    }
+     void setImePrezime (char *imepr){
+        strcpy(imeprezime,imepr)  ;
+    }
+    char* getImePrezime () {
+        return imeprezime;
+    }
+     void setAdresa (char *adr){
+        strcpy(adresa,adr);
+    }
+    char* getAdresa () {
+        return adresa;
+    }
+    void setSaldo (long sal){
+        saldo = sal;
+    }
+    long getSaldo () {
+        return saldo;
+    }
+
+
+    void vnesi_podatoci(int br);
+
+
+};
+void Stedac::vnesi_podatoci (int br) {
+
+
+    char imepr[30], adr[50];
+    long sld;
+
+
+    setBroj(br);
+    cin.ignore();
+    cout << "ImePrezime " << endl;
+    cin.getline(imepr,29);
+    setImePrezime(imepr);
+    cout << "Vnesi adresa" << endl;
+    cin.getline(adr,49);
+    setAdresa(adr);
+    cout << "Vnesi saldo" << endl;
+    cin >> sld;
+    setSaldo(sld);
+}
+
+void prikaziStedac(Stedac *st) {
+    int i;
+  cout << "vnesi broj na stedac za prikaz: " << endl;
+    cin >> i;
+    if (st[i].getBroj() != 0 )
+    {
+
+    cout  << setw(10) << left << "Broj"
+              << setw(30) << left << "Ime i prezime"
+              << setw(50) << left << "Adresa"
+              << setw(10) << left << "Saldo" << endl;
+
+        cout  << setw(10) << left << st[i].getBroj()
+              << setw(30) << left << st[i].getImePrezime()
+              << setw(50) << left << st[i].getAdresa()
+              << setw(10) << left << st[i].getSaldo() << endl;
+    }
+    else
+    {
+        cout << " Nema stedac so takov broj" << endl;
+    }
+}
+
+void uplata(Stedac *st ) {
+    int i;
+    long uplata;
+    cout << "Vnesi broj na stedac sto uplakja: " <<endl;
+    cin >> i;
+    cout << "vnesi kolku se uplakja: " << endl;
+    cin >> uplata;
+
+    st[i].setSaldo(st[i].getSaldo() + uplata);
+    cout << "Nova sostojba: " << endl;
+    cout << st[i].getSaldo() << endl;
+
+    }
+
+
+void isplata (Stedac *st){
+    int i;
+    long isplata;
+    cout << "Vnesi broj na stedac sto bara isplata: " <<endl;
+    cin >> i;
+    cout << "vnesi kolku se isplakja: " << endl;
+    cin >> isplata;
+
+    if (st[i].getSaldo() <= isplata)
+        cout << "Nemate dovolno sredstva" << endl;
+
+    else{
+        st[i].setSaldo(st[i].getSaldo() - isplata);
+        cout << "Novsa sostojba " << endl;
+        cout << st[i].getSaldo() << endl;
+    }
+}
+
+void prikazi_podatoci (Stedac *st) {
+    int i;
+      cout  << setw(10) << left << "Broj"
+              << setw(30) << left << "Ime i prezime"
+              << setw(50) << left << "Adresa"
+              << setw(10) << left << "Saldo" << endl;
+      for (i = 0; i <= 99; i++){
+        if (st[i].getBroj() != 0){
+            cout  << setw(10) << left << st[i].getBroj()
+              << setw(30) << left << st[i].getImePrezime()
+              << setw(50) << left << st[i].getAdresa()
+              << setw(10) << left << st[i].getSaldo() << endl;
+        }
+    }
+}
+
+
+int main () {
+
+    Stedac st[SIZE];
+ int vnes=10,ind,i;
+for (i=0;i<=100;i++){
+    st[i].setBroj(0);
+    st[i].setImePrezime(" ");
+    st[i].setAdresa(" ");
+    st[i].setSaldo(0);
+}
+
+
+    while (vnes != 0){
+    cout << "Meni: " << endl;
+    cout << "0 - Kraj" << endl;
+    cout << "1 - Vnesi stedac" << endl;
+    cout << "2 - Prikaz na podatoci " << endl;
+    cout << "3 - Uplata na smetka" << endl;
+    cout << "4 - Isplata na sredstva" << endl;
+    cout << "5 - Prikaz na saldo za stedac" << endl;
+     cin >> vnes;
+
+    switch (vnes) {
+            case 1:
+            cout << "Vnesi broj na stedac: " << endl;
+            cin >> ind;
+            if (st[ind].getBroj() != 0){
+                cout << "Postoi stedac so toj broj " << endl;
+                }
+                else
+            st[ind].vnesi_podatoci(ind);
+            break;
+
+            case 2:
+            prikazi_podatoci(st);
+            break;
+
+            case 3:
+            uplata(st);
+            break;
+
+            case 4:
+            isplata(st);
+            break;
+
+            case 5:
+            prikaziStedac(st);
+
+
+                default: cout << "Vnesovte greska opcija" << endl;
+                break;
+
+        }
+
+   }
+
+   }
+
+
 
 
 
