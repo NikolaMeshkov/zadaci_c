@@ -1810,6 +1810,44 @@ void trippleCallByReference (int &brRef){
 
 }
 
+           **************************************************** PREDAVANJE 01 od CPP **********************************************************************
+           
+                      
+                      #include<iostream>
+#define SIZE 100
+using namespace std;
+
+
+template <typename M>
+M minimum (M vrednost1, M vrednost2)
+{
+   M min = vrednost1;
+
+   if (vrednost2 < vrednost1)
+    min = vrednost2;
+
+    return min;
+}
+int main () {
+    int br1,br2;
+    float fl1,fl2;
+    char kar1,kar2;
+
+    cout << "vnesi dva celi broja" << endl;
+    cin >> br1 >> br2;
+    cout << "pomal od broevite e: "<< minimum(br1,br2) << endl;
+
+    cout << "vnesi dva realni broevi" << endl;
+    cin >> fl1 >> fl2;
+    cout << "pomal od broevite e: " << minimum (fl1,fl2) << endl;
+
+    cout << "vnesi dva karakteri " << endl;
+    cin >> kar1 >> kar2;
+    cout << "pomal od karakterite e: " << minimum (kar1,kar2) << endl;
+
+
+
+}
 
 
 
