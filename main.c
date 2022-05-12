@@ -2224,7 +2224,189 @@ for (i=0;i<=100;i++){
    }
 
 
+           **************************************************** PREDAVANJE 04 od CPP **********************************************************************
 
+//zadaca 1. Создади класа Dropki која извршува операции со дропки. Напиши „драјвер“ за твојот програм да манипулира со оваа класа.
+
+//Користи целоборјни променливи за броител и именител кои мора да се приватни. Обезбеди потребен број на контруктори кои нема да дозволат дефинирање на грешни вредности (со 0 не се дели!). По секоја од наредните операции, дропката треба да се зачува во редуцирана форма, т.е дропката 2/4 треба да се зачува како 1/2. Обезбеди ги следните јавни функции членки:
+//	а) Собирање на два објекти од класа Dropki. Резултатот да се даде во редуцирана форма.
+//	б) Одземање на два објекти од класа Dropki. Резултатот да се даде во редуцирана форма
+//	в) Множење на два објекти од класа Dropki. Резултатот да се даде во редуцирана форма
+//	г) Делење на два објекти од класа Dropki. Резултатот да се даде во редуцирана форма
+//	д) Печатење на објектот во форма a/b.
+//	ѓ) Печатење на објектот во форма на реален број.
+
+
+// VO main.cpp
+
+#include <iostream>
+
+#include "Dropki1.h"
+using namespace std;
+
+int main()
+{
+    int i,b,i2,b2;
+    Dropki1 dr ,dr2,dr3;
+
+
+    cout << "Vnesi Imenitel na prva dropka " << endl;
+    cin >> i;
+    dr.setImenitel(i);
+
+    cout << "Vnesi broitel na prva dropka" << endl;
+    cin >> b;
+    dr.setBroitel(b);
+
+    cout << "Vnesi imenitel na vtora dropka " << endl;
+    cin >> i2;
+    dr2.setImenitel(i2);
+
+    cout << "Vnesi broitel na vtora dropka " << endl;
+    cin >> b2;
+    dr2.setBroitel(b2);
+
+    
+}
+// vo dropki1.h
+#ifndef DROPKI1_H
+#define DROPKI1_H
+
+
+class Dropki1
+{
+    public:
+        Dropki1();
+       void setImenitel(int);
+       void setBroitel (int);
+       int getBroitel();
+       int getImenitel();
+       int nzd(int,int);
+       void reduiraj(int i,int b);
+       int nzs(int,int);
+        void soberiDropki (Dropki1 dr1,Dropki1 dr2);
+        void odzemiDropki (Dropki1 dr1,Dropki1 dr2);
+        void mnoziDropki (Dropki1 dr1, Dropki1 dr2);
+        void deliDropki (Dropki1 dr1, Dropki1 dr2);
+        void pecatiDropka (Dropki1 dr);
+        void pecatiDecimalen(Dropki1 dr);
+
+    private:
+        int imenitel;
+        int broitel;
+};
+
+#endif // DROPKI1_H
+
+// vo dropki1.cpp
+#include <iostream>
+using namespace std;
+#include "Dropki1.h"
+
+Dropki1::Dropki1() {imenitel = broitel = 0;}
+
+    void Dropki1::setImenitel(int i)
+    {
+
+        imenitel = i;
+    }
+    void Dropki1::setBroitel(int b)
+    {
+        if (b == 0)
+            cout << "So 0 ne se dele" << endl;
+        else
+        broitel = b;
+    }
+
+    int Dropki1::getImenitel (){
+        return imenitel;
+    }
+
+    int Dropki1::getBroitel () {
+        return broitel;
+    }
+
+    int Dropki1::nzd(int br1,int br2){
+        int priv;
+
+
+        while(1) {
+            if (br2 == 0)
+                return br1;
+            int priv = br1%br2;
+            br1 = br2;
+            br2 = priv;
+
+        }
+    }
+
+    int Dropki1::nzs(int br1, int br2){
+
+    return (br1 / nzd(br1, br2)) * br2;
+
+    }
+
+    void Dropki1::reduiraj (int i, int b) {
+        int br;
+        br = nzd(i,b);
+        imenitel = i / br;
+        broitel  = b / br;
+
+    }
+
+    void Dropki1::soberiDropki (Dropki1 dr1, Dropki1 dr2) {
+        int i,b;
+
+        b = nzs(dr1.getBroitel(),dr2.getBroitel());
+        i = dr1.getImenitel()*(b/dr1.getBroitel()) + dr2.getImenitel()*(b/dr2.getBroitel());
+
+        reduiraj(i,b);
+       cout << imenitel <<endl;
+       cout << broitel << endl;
+
+
+    }
+
+    void Dropki1::odzemiDropki (Dropki1 dr1, Dropki1 dr2) {
+        int i,b;
+
+         b = nzs(dr1.getBroitel(),dr2.getBroitel());
+        i = dr1.getImenitel()*(b/dr1.getBroitel()) - dr2.getImenitel()*(b/dr2.getBroitel());
+
+        reduiraj(i,b);
+       cout << imenitel <<endl;
+       cout << broitel << endl;
+    }
+
+    void Dropki1::mnoziDropki (Dropki1 dr1, Dropki1 dr2){
+        int i,b;
+
+        i = dr1.getImenitel() * dr2.getImenitel();
+        b = dr1.getBroitel() * dr2.getBroitel();
+
+        reduiraj(i,b);
+        cout << imenitel <<endl;
+       cout << broitel << endl;
+
+    }
+
+    void Dropki1::deliDropki (Dropki1 dr1, Dropki1 dr2) {
+        int i,b;
+
+        i = dr1.getImenitel() * dr2.getBroitel();
+        b = dr1.getBroitel() * dr2.getImenitel();
+
+        reduiraj (i,b);
+        cout << imenitel <<endl;
+       cout << broitel << endl;
+    }
+
+    void Dropki1::pecatiDropka (Dropki1 dr){
+        cout << dr.getImenitel() << "/" << dr.getBroitel() << endl;
+    }
+    void Dropki1::pecatiDecimalen(Dropki1 dr){
+        cout << (double) imenitel / broitel << endl;
+    }
 
 
 
