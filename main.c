@@ -2409,4 +2409,448 @@ Dropki1::Dropki1() {imenitel = broitel = 0;}
     }
 
 
+ **************************************************** PREDAVANJE 05 od CPP **********************************************************************
+
+// zadaca 1 1. Во една зоолошка градина се води евиденција за различни типови животни кои се чуваат во неа: птици, влекачи, цицачи.... 
+//Користејќи ги концептите на ООП да се моделира класа според спецификациите дадени на слика 5.1.
+ //   Цицачите се вакцинираат секоја година, птиците на секои 6 месеци, а влекачите на секои 8 месеци. 
+  //  Датумите да се дефинираат во посебна класа Datum со приватни податочни членки den, mesec и godina.
+            //Да се имплементира кориснички посредник преку мени со следните опции:
+//1.	Додавање на животно во зоолошка градина
+//2.	Прикажување на бројна состојба
+///3.	Прикажување на животни од дадена група (тип: c- цицачи, v-влекачи, p-птици)
+//4.	Прикажување на целата листа
+//5.	Прикажување на сите животни кои треба да се вакцинираат во рок од 1 недела
+//6.	Излез од менито
+
+//Klasa: Zivotno
+//Podatoci:
+//Datum_na_ragjanje
+//Datum_na_donesuvawe_vo_zoo
+//tip
+//Pol (m/z)
+//Ime
+//Datum_na_posledna_vakcinacija
+//Metodi:
+//Konstruktor()
+//Prikazi_Podatoci()
+//Presmetaj_vakcinacija()
+
+// Vo main.cpp
+#include <iostream>
+#include "datum.h"
+#include "Zivotno.h"
+#include "Zoo.h"
+#define SIZE 1000
+#include <datum.h>
+#include<istream>
+
+
+using namespace std;
+
+int main()
+{
+     Zoo z1;
+
+
+
+
+   {
+
+    while(true)
+    {
+
+        cout << "1 - Dodadi zivotno" << endl;
+        cout << "2 - Prikazi broj na zivotni" << endl;
+        cout << "3 - Prikazi zivotni od dadena grupa (c-cicaci, v-vlekaci, p-ptici)" << endl;
+        cout << "4 - Prikazi cela lista na zivotni" << endl;
+        cout << "5 - Prikazi zivotni koi treba da se vakciniraat vo rok od 1 nedela" << endl;
+        cout << "6 - Izlez" << endl;
+        cout << "Opcija: ";
+        int opcija;
+        cin >> opcija;
+
+        if (opcija == 6)
+            break;
+
+        switch(opcija)
+        {
+            case 1: z1.novoZivotno();break;
+            case 2: z1.brojNaZivotni();break;
+            case 3: z1.prikaziGrupa();break;
+            case 4: z1.prikaziLista();break;
+            case 5: z1.prikaziVak();break;
+        }
+        }
+    }
+
+
+
+}
+// vo Zivotno.h
+#ifndef ZIVOTNO_H
+#define ZIVOTNO_H
+#include "datum.h"
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+class Zivotno
+{
+    public:
+    Zivotno( const char *zIme, char zPol,char zTip , int rden , int rmesec, int rgodina, int dden, int dmesec, int dgodina, int vden, int vmesec, int vgodina);
+
+    void print() const;
+    void vnesizivotno(Zivotno *ziv);
+    char getTip(){
+        return tip;
+    }
+    datum getVden() const
+    {
+       return vakdatum;
+    }
+
+
+
+    private:
+        char tip;
+        char pol;
+        char ime [15];
+        const datum ragdatum;
+        const datum dojdatum;
+        const datum vakdatum;
+
+};
+
+#endif // ZIVOTNO_H
+// vo Zivotno.cpp
+
+#include "Zivotno.h"
+#include "datum.h"
+#include <cstring>
+#include <iostream>
+
+using namespace std;
+
+
+Zivotno::Zivotno( const char *zIme, char zPol,char zTip ,  int rden , int rmesec, int rgodina, int dden, int dmesec, int dgodina, int vden, int vmesec, int vgodina)
+: ragdatum (rden,rmesec,rgodina), dojdatum (dden,dmesec,dgodina),vakdatum(vden,vmesec,vgodina)
+{
+    int length = strlen(zIme);
+    length = (length = 15 ? length : 14);
+    strncpy(ime,zIme,length);
+    ime[length] = '\0';
+
+    pol = zPol;
+    tip = zTip;
+
+}
+void Zivotno::print () const {
+   ragdatum.prikaziDatum();
+   cout << "  ";
+   dojdatum.prikaziDatum();
+   cout << "   ";
+   cout << pol;
+   cout << "    ";
+   cout << tip;
+   cout << "    ";
+   cout << ime;
+   cout << "   ";
+   vakdatum.prikaziDatum();
+   cout << endl;
+
+    }
+
+
+
+/*Zivotno::~Zivotno()
+{
+   cout << "Destruktor na objekt od klasata Employee : "
+        << lastName << ", " << firstName << endl;
+} */
+
+
+// vo datum.h
+
+#ifndef DATUM_H
+#define DATUM_H
+using namespace std;
+
+
+class datum
+{
+    public:
+        datum(int d=1,int m=1, int g=2007);
+    int proveriDen(int testDen);
+      void  prikaziDatum () const ;
+
+      const int getDen (){
+        return den;
+       }
+       days(const datum& d);
+       const int getMesec(){
+        return mesec;
+       }
+       const int getGod() {
+        return godina;
+       }
+
+    private:
+        int den;
+        int mesec;
+        int godina;
+};
+
+#endif // DATUM_H
+
+// vo datum.cpp
+#include "datum.h"
+#include <iomanip>
+#include <iostream>
+
+using namespace std;
+    datum::datum (int d,int m,int g){
+       if (m > 0 && m <=12)
+        mesec = m;
+       else {
+            mesec = 1;
+        cout << "ne postoi takov mesec" << endl;
+       }
+
+
+    godina = g;
+
+    den = proveriDen (d);
+
+    }
+
+
+void datum :: prikaziDatum () const { cout << den << "/" << mesec <<"/" << godina;}
+
+int datum :: proveriDen (int testDen){
+    static const int denoviVoMesec [13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+
+    if (testDen > 0 && testDen < denoviVoMesec[mesec])
+        return testDen;
+    if (mesec == 2 && testDen == 29 && (godina % 400 == 0 || (godina % 4 == 0 && godina %100 != 0)))
+        return testDen;
+
+    cout << "Denot e gresen " << endl;
+    return 1;
+
+}
+
+
+/*datum::~datum()
+{
+   cout << "Destruktor na klasata Date " << endl;
+   prikaziDatum();
+   cout << endl;
+}*/
+
+// vo Zoo.h
+#ifndef ZOO_H
+#define ZOO_H
+#include "Zivotno.h"
+
+
+class Zoo
+{
+    public:
+        Zoo();
+      void  vnesiZivotno(Zivotno *ziv);
+      void novoZivotno();
+      void brojNaZivotni();
+      void prikaziGrupa();
+      void prikaziLista();
+      void prikaziVak();
+
+    private:
+        Zivotno **ziv;
+        int brojZivotni;
+};
+
+#endif // ZOO_H
+
+// vo Zoo.cpp
+#include "Zoo.h"
+#include "Zivotno.h"
+#define SIZE 100
+#include "datum.h"
+#include<iostream>
+
+using namespace std;
+
+Zoo::Zoo()
+{
+    brojZivotni = 0;
+   ziv = new Zivotno*[SIZE];
+}
+
+void Zoo::vnesiZivotno(Zivotno *z){
+    ziv[brojZivotni++] = z;
+}
+
+void Zoo::brojNaZivotni(){
+    cout << "Broj na zivotni: " << brojZivotni << endl;
+}
+
+
+void Zoo::prikaziGrupa (){
+    int i;
+    char grupa;
+
+    cout << "Vnesete grupa za prikaz (c-cicaci,v-vlekaci,p-ptici): " <<endl;
+    cin >> grupa;
+    if (brojZivotni > 0){
+        cout << setw(13) << left << "data na Rag"
+             << setw(13) << left << "data na Dones"
+             << setw(5) << left << "pol"
+             << setw(5) << left << "tip"
+             << setw(13) << left << "data na Vak" <<endl;
+    for (i =0; i<= brojZivotni; i++){
+         Zivotno* z = ziv[i];
+        if ( z->getTip() == grupa)
+           z->print();
+        }
+    }
+    else {
+        cout << "nema zivotni vo zoo" << endl;
+    }
+}
+
+void Zoo::novoZivotno() {
+
+
+    char aTip;
+    char aPol;
+    char aIme[15];
+        int rden;
+        int rmesec;
+        int rgodina;
+        int dden;
+        int dmesec;
+        int dgodina;
+        int vden;
+        int vmesec;
+        int vgodina;
+
+
+        cout << "Vnesete den na raganje: " << endl;
+        cin >> rden;
+        cout << "Vnesete mesec na raganje: "<< endl;
+        cin >> rmesec;
+        cout << "Vnesete godina na raganje: " <<endl;
+        cin >> rgodina;
+         cout << "Vnesete den na donesuvanje: " <<endl;
+        cin >> dden;
+        cout << "Vnesete mesec na donesuvanje: " <<endl;
+        cin >> dmesec;
+        cout << "Vnesete godina na donesuvanje: " <<endl;
+        cin >> dgodina;
+
+        cout << "Vnesete tip (c-cicaci, v-vlekaci, p-ptici): ";
+        cin >> aTip;
+
+        cout << "Vnesete pol (m-masko, z-zensko): ";
+        cin >> aPol;
+        cout << "Vnesete ime: ";
+        cin >> aIme;
+         cout << "Vnesete den na vakcinacija: "<< endl;
+        cin >> vden;
+        cout << "Vnesete mesec na vakcinacija: " <<endl;
+        cin >> vmesec;
+        cout << "Vnesete godina na vakcinacija: " <<endl;
+        cin >> vgodina;
+
+        vnesiZivotno( new Zivotno(aIme,aPol,aTip,rden,rmesec,rgodina,dden,dmesec,dgodina,vden,vmesec,vgodina));
+}
+
+void Zoo::prikaziLista (){
+    int i;
+    char grupa;
+
+
+    if (brojZivotni > 0){
+        cout << setw(13) << left << "data na Rag"
+             << setw(13) << left << "data na Dones"
+             << setw(5) << left << "pol"
+             << setw(5) << left << "tip"
+             << setw(13) << left << "data na Vak" <<endl;
+    for (i =0; i<= brojZivotni; i++){
+         Zivotno* z = ziv[i];
+           z->print();
+        }
+    }
+    else {
+        cout << "nema zivotni vo zoo" << endl;
+    }
+}
+void Zoo::prikaziVak (){
+   datum *d;
+   int den,mesec,godina;
+
+   cout << "vnesete denesen den" << endl;
+   cin >> den;
+   cout <<"vnesete mesec " << endl;
+   cin >> mesec;
+   cout << "vnesete godina:" << endl;
+   cin >> godina;
+   d = new datum(den,mesec,godina);
+
+
+
+
+    for (int i=0;i<=brojZivotni;i++){
+             Zivotno *z = ziv[i];
+      int mesec_vak,momen_mesec;
+      mesec_vak = ziv[i]->getVden().getMesec();
+      momen_mesec = d->getMesec();
+
+        switch (z->getTip()){
+        case 'p':
+      if (mesec_vak < 6 && momen_mesec >= mesec_vak + 6){
+         ziv[i]->print();
+            }
+      if (mesec_vak > 6 && (momen_mesec+12) - mesec_vak > 6){
+
+
+        ziv[i]->print();
+            }
+
+        case 'c':
+             if (mesec_vak >= momen_mesec && ziv[i]->getVden().getGod() > d->getGod() ){
+         ziv[i]->print();
+            }
+
+
+
+        case 'v':
+         if (mesec_vak < 8 && momen_mesec >= mesec_vak + 8){
+         ziv[i]->print();
+      }
+      if (mesec_vak > 8 && (momen_mesec+12) - mesec_vak > 8){
+
+
+        ziv[i]->print();
+      }
+        }
+    }
+
+}
+
+
+/*Zoo::~Zoo()
+{
+
+}*/
+
+
+
+
+
+
+
+
 
