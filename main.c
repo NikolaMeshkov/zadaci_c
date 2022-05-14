@@ -2846,10 +2846,176 @@ void Zoo::prikaziVak (){
 
 }*/
 
+           **************************************************** PREDAVANJE 05 od CPP **********************************************************************
+
+
+//1. Создади класа Stedac во која ќе користиш статичка податочна членка kamata која 
+//ќе ја чува вредноста на годишната камата за сите штедачи и статична податочна членка brojStedaci кој во секој момент кажува колку штедачи има во банката.
+//Останатите податочни членки се lice, bilans и kredit. 
+ //Името, презимето, адресата и телефонот на секој објeкт од класата Stedac  се сместени во приватна податочна членка lice која е од класaта Covek. 
+// vo main
+
+#include <iostream>
+#include "Covek.h"
+#define SIZE 100
+#include "Stedac.h"
+using namespace std;
+
+int main()
+{
+     Stedac s1("Goce","Delcev","Kukush","123321",23500,2.3);
+     cout << "br na stedaci: " << s1.getBrStedaci() << "   Vkupna kamata " << s1.getKamata() << endl;
+     Stedac s2("Marko","Cepenkov","Prilep","432423",3500,0.2);
+     cout << "br na stedaci: " << s1.getBrStedaci() << "   Vkupna kamata " << s1.getKamata() << endl;
+     Stedac s3("Dame","Gruev","Krusevo","432423",35009,0.4);
+     cout << "br na stedaci: " << s1.getBrStedaci() << "   Vkupna kamata " << s1.getKamata() << endl;
+
+}
+
+//stedac.h
+
+#ifndef STEDAC_H
+#define STEDAC_H
+#include "Covek.h"
+#include <iostream>
+#include <cstring>
+
+class Stedac
+{
+    public:
+        Stedac(const char *ime, const char *prezime,const char *adresa,const char *telefon, double bilance, double credit);
+
+
+    static int getBrStedaci();
+
+   double getKamata();
 
 
 
 
+    private:
+        static double kamata;
+        static int brStedaci;
+        Covek lice;
+        double bilans;
+        double kredit;
+};
+
+#endif // STEDAC_H
+//stedac.cpp
+#include "Stedac.h"
+#include "Covek.h"
+#include<iostream>
+using namespace std;
+
+int Stedac::brStedaci =0;
+double Stedac::kamata = 0;
+Stedac::Stedac(const char *ime, const char *prezime,const char *adresa,const char *telefon, double bilance, double credit)
+{
+    lice = Covek(ime,prezime,adresa,telefon);
+    bilans = bilance;
+    kredit = credit;
+
+    ++brStedaci;
+    kamata += bilans * kredit;
+
+}
+int Stedac::getBrStedaci() {
+    return brStedaci;
+ }
+ double Stedac::getKamata(){
+    return kamata;
+ }
+
+Stedac::~Stedac()
+{
+    --brojStedaci;
+    kamata -= bilans*kredit;
+}
+// Covek.h
+#ifndef COVEK_H
+#define COVEK_H
+
+
+class Covek
+{
+    public:
+        Covek(){}
+
+
+        Covek(const char *Ime, const char *Prezime,const char *address,const char*phone);
+        const char *getIme();
+        const char *getPrezime();
+        const char *getAdresa();
+        const char *getTelefon();
+        void prikazi();
+
+
+
+    private:
+       char *Ime;
+       char *Prezime;
+       char *Adresa;
+       char *Telefon;
+};
+
+#endif // COVEK_H
+
+// Covek.cpp
+#include "Covek.h"
+#include <cstring>
+#include <cassert>
+using namespace std;
+#include <iomanip>
+#include <iostream>
+
+
+Covek::Covek(const char *Name, const char *Lname,const char *address,const char*phone)
+{
+    Ime = new char[strlen(Name) + 1 ];
+    assert (Ime != 0);
+    strcpy (Ime,Name);
+    Prezime = new char[strlen(Lname) + 1 ];
+
+    assert (Prezime != 0);
+    strcpy (Prezime,Lname);
+
+    Adresa = new char[strlen(address) + 1 ];
+    assert(Adresa != 0);
+    strcpy (Adresa,address);
+
+    Telefon = new char[strlen(phone) + 1 ];
+    assert (Telefon != 0);
+    strcpy(Telefon,phone);
+
+}
+
+void Covek::prikazi(){
+    cout  << getIme() << getPrezime() << getAdresa() << getTelefon();
+}
+
+
+const char *Covek::getIme() {
+    return Ime;
+}
+
+const char *Covek::getPrezime() {
+    return Prezime;
+}
+const char *Covek::getAdresa() {
+    return Adresa;
+}
+const char *Covek::getTelefon() {
+    return Telefon;
+}
+
+Covek::~Covek()
+{
+    delete [] Ime;
+    delete [] Prezime;
+    delete [] Adresa;
+    delete [] Telefon;
+}
 
 
 
