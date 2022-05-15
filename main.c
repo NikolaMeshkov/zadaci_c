@@ -3246,4 +3246,206 @@ Dropki1 Dropki1::operator/(int i){
     void Dropki1::pecatiDecimalen(Dropki1 dr){
         cout << (double) imenitel / broitel << endl;
     }
+      
+
+           **************************************************** PREDAVANJE 08 od CPP **********************************************************************
+           
+     //zadaca Вежби:
+
+//1. Нека е дадена класата Complex со кодовите презентирани подолу (дефиниција на класа, дефиниција на функции цхленки и драјвер за класатa Complex). 
+                      //Оваа класа овозможува операции со комплексни броеви. Тоа се броеви од облик realenDel + imaginarenDel * i, каде i има вредност √1
+
+//а) да се модифицира класата така да овозможи влез и излез на комплексни броеви преку преклопување на операторите << и >>.
+//Ова треба да ја замени функцијата print() од класата, која во вашето решение не треба да постои.
+
+//б) да се преклопи оператор за множење кој ќе овозможи множење на: два комплексни броја, комплексен со цел број и цел број со комплексен број.
+
+//в) да се преклопат операорите == и != кои ќе овозможат споредување на два комплексни броја.
+//г) да се преклопат операторите +=, -= и *= со помош на ваќе направените функции за преклопување на +, - и *.
+
+// main.cpp
+                      
+                      // p08_06.cpp
+// Drajver za klasata Complex
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+#include "complex1.h"
+
+int main()
+{
+      Complex x, y( 4.3, 8.2 ), z( 3.3, 1.1 ),c( 3.3, 1.1 );
+      int i;
+
+   cout << "x: " << x;
+
+   cout << "\ny: " << y;
+
+   cout << "\nz: "<< z;
+
+
+   x = y + z;
+   cout << "\n\nx = y + z:\n" << x;
+
+   cout << " = "<< y;
+
+   cout << " + "<< z;
+
+
+   x = y - z;
+   cout << "\n\nx = y - z:\n"<< x;
+
+   cout << " = "<< y;
+
+   cout << " - "<< z;
+
+   cout << endl;
+
+   x = y * z;
+   cout << "\n\nx = y * z:\n" << x;
+
+   cout << " = "<< y;
+
+   cout << " + "<< z;
+
+   x = y * 2;
+   cout << "\n\nx = y * 2:\n" << x;
+
+   cout << " = "<< y;
+
+   x = 2 * y;
+    cout << "\n\nx = 2 * y:\n" << x;
+
+   cout << " = "<< y;
+
+    cout << endl;
+    i = x==z;
+    cout << i;
+    cout << endl;
+    i = c==z;
+    cout << i;
+
+    cout << endl;
+    i = x!=z;
+    cout << i;
+    cout << endl;
+    i = c!=z;
+    cout << i;
+
+
+     cout<< endl;
+    x= z+=z;
+    cout<< "z+=z "<<endl;
+    cout << x;
+
+     cout<< endl;
+    x= z-=z;
+    cout<< "z-=z "<<endl;
+    cout << x;
+
+     cout<< endl;
+    x= z*=z;
+    cout<< "z*=z "<<endl;
+    cout << x;
+
+    return 0;
+} // kraj main
+
+//complex1.h 
+#ifndef COMPLEX1_H
+#define COMPLEX1_H
+#include<iostream>
+using namespace std;
+
+class Complex {
+public:
+   Complex( double = 0.0, double = 0.0 );       // konstruktor
+   Complex operator+( const Complex & ) const;  // sobiranje
+   Complex operator-( const Complex & ) const;
+   Complex operator*( const Complex & ) const;
+   Complex operator*( int i ) const ;
+    friend Complex operator*( const int &i, const Complex &c1 ){return Complex (c1.real*i , c1.imaginary*i);}
+    friend int operator==(const Complex &c1,const Complex &c2) {if (c1.real == c2.real && c1.imaginary == c2.imaginary) return 1; else return 0;}
+     friend int operator!=(const Complex &c1,const Complex &c2) {if (c1.real == c2.real && c1.imaginary == c2.imaginary) return 0; else return 1;}
+   const Complex &operator=( const Complex & ); // dodeluvanje
+   Complex operator+=( const Complex &operand2 ) const;
+   Complex operator-=( const Complex &operand2 ) const;
+   Complex operator*=( const Complex &operand2 ) const;
+   friend ostream &operator<<(ostream & ,Complex &);                         // izlez
+private:
+   double real;       // realen del
+   double imaginary;  // imaginaren del
+};
+
+#endif
+
+//complex1.cpp
+
+
+#include <iostream>
+
+using std::cout;
+
+#include "complex1.h"
+
+
+Complex::Complex( double r, double i )
+   : real( r ), imaginary( i ) { }
+
+
+Complex Complex::operator+( const Complex &operand2 ) const
+{
+   return Complex( real + operand2.real,
+                   imaginary + operand2.imaginary );
+}
+
+
+Complex Complex::operator-( const Complex &operand2 ) const
+{
+   return Complex( real - operand2.real,
+                   imaginary - operand2.imaginary );
+}
+
+Complex Complex::operator*( const Complex &operand2 ) const
+{
+   return Complex( (real*operand2.real) - (imaginary*operand2.imaginary), (real*operand2.imaginary) + (imaginary*operand2.real) );
+}
+const Complex& Complex::operator=( const Complex &right )
+{
+   real = right.real;
+   imaginary = right.imaginary;
+   return *this;
+}
+
+Complex Complex::operator*( int i ) const
+{
+        return Complex (real*i , imaginary*i);
+
+}
+Complex Complex::operator+=( const Complex &operand2 ) const
+{
+   return Complex( real + operand2.real,
+                   imaginary + operand2.imaginary );
+}
+
+Complex Complex::operator-=( const Complex &operand2 ) const
+{
+   return Complex( real - operand2.real,
+                   imaginary - operand2.imaginary );
+}
+
+Complex Complex::operator*=( const Complex &operand2 ) const
+{
+   return Complex( (real*operand2.real) - (imaginary*operand2.imaginary), (real*operand2.imaginary) + (imaginary*operand2.real) );
+}
+
+
+ostream &operator<<(ostream& out,Complex &c1){
+ out << "(" << c1.real << "," << c1.imaginary << ")";
+
+}
+
+
 
