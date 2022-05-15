@@ -2846,7 +2846,7 @@ void Zoo::prikaziVak (){
 
 }*/
 
-           **************************************************** PREDAVANJE 05 od CPP **********************************************************************
+           **************************************************** PREDAVANJE 06 od CPP **********************************************************************
 
 
 //1. Создади класа Stedac во која ќе користиш статичка податочна членка kamata која 
@@ -3017,6 +3017,233 @@ Covek::~Covek()
     delete [] Telefon;
 }
 
+            **************************************************** PREDAVANJE 07 od CPP **********************************************************************
 
 
+// vo main 
+
+#include <iostream>
+
+#include "Dropki1.h"
+using namespace std;
+
+int main()
+{
+    Dropki1 dr(3,8);
+    Dropki1 dr2(2,4);
+    
+    Dropki1 dr3;
+
+
+    dr3 = dr+dr2;
+    dr3.reduiraj(dr3.getImenitel(),dr3.getBroitel());
+    dr3.pecatiDropka(dr3);
+    dr3.pecatiDecimalen(dr3);
+
+
+    dr3 = dr-dr2;
+    dr3.reduiraj(dr3.getImenitel(),dr3.getBroitel());
+    dr3.pecatiDropka(dr3);
+    dr3.pecatiDecimalen(dr3);
+
+     dr3 = dr*dr2;
+    dr3.reduiraj(dr3.getImenitel(),dr3.getBroitel());
+    dr3.pecatiDropka(dr3);
+    dr3.pecatiDecimalen(dr3);
+
+     dr3 = dr/dr2;
+    dr3.reduiraj(dr3.getImenitel(),dr3.getBroitel());
+    dr3.pecatiDropka(dr3);
+    dr3.pecatiDecimalen(dr3);
+
+     dr3 = dr+3;
+    dr3.reduiraj(dr3.getImenitel(),dr3.getBroitel());
+    dr3.pecatiDropka(dr3);
+    dr3.pecatiDecimalen(dr3);
+
+     dr3 = dr-3;
+    dr3.reduiraj(dr3.getImenitel(),dr3.getBroitel());
+    dr3.pecatiDropka(dr3);
+    dr3.pecatiDecimalen(dr3);
+
+     dr3 = dr*3;
+    dr3.reduiraj(dr3.getImenitel(),dr3.getBroitel());
+    dr3.pecatiDropka(dr3);
+    dr3.pecatiDecimalen(dr3);
+
+     dr3 = dr/3;
+    dr3.reduiraj(dr3.getImenitel(),dr3.getBroitel());
+    dr3.pecatiDropka(dr3);
+    dr3.pecatiDecimalen(dr3);
+
+
+
+}
+
+
+// vo Dropki1.h
+
+#ifndef DROPKI1_H
+#define DROPKI1_H
+
+
+class Dropki1
+{
+    public:
+        Dropki1 () {imenitel =0, broitel =0;}
+        Dropki1(int im,int br);
+
+
+        Dropki1 operator+(Dropki1 dr);
+        Dropki1 operator-(Dropki1 dr);
+        Dropki1 operator*(Dropki1 dr);
+        Dropki1 operator/(Dropki1 dr);
+        Dropki1 operator+(int i);
+        Dropki1 operator-(int i);
+        Dropki1 operator*(int i);
+        Dropki1 operator/(int i);
+
+        void zemi_im_br(int &im,int &br) {im = imenitel; br = broitel;}
+       int getBroitel();
+       int getImenitel();
+       int nzd(int,int);
+       void reduiraj(int i,int b);
+       int nzs(int,int);
+
+        void pecatiDropka (Dropki1 dr);
+        void pecatiDecimalen(Dropki1 dr);
+
+    private:
+        int imenitel;
+        int broitel;
+
+};
+
+#endif // DROPKI1_H
+
+// vo Dropki1.cpp
+
+#include <iostream>
+using namespace std;
+#include "Dropki1.h"
+
+Dropki1::Dropki1(int im,int br){
+    imenitel = im;
+    broitel = br;
+}
+
+Dropki1 Dropki1::operator+(Dropki1 dr){
+    Dropki1 dr2;
+       if (broitel == dr.broitel){
+        dr2.broitel = broitel;
+        dr2.imenitel = imenitel + dr.imenitel;
+       }
+    else {
+        int tp = nzs(broitel,dr.broitel);
+        dr2.broitel = tp;
+        dr2.imenitel = (tp/broitel)*imenitel + (tp/dr.broitel)*dr.imenitel;
+    }
+        return dr2;
+}
+
+Dropki1 Dropki1::operator-(Dropki1 dr){
+    Dropki1 dr2;
+       if (broitel == dr.broitel){
+        dr2.broitel = broitel;
+        dr2.imenitel = imenitel - dr.imenitel;
+       }
+    else {
+        int tp = nzs(broitel,dr.broitel);
+        dr2.broitel = tp;
+        dr2.imenitel = (tp/broitel)*imenitel - (tp/dr.broitel)*dr.imenitel;
+    }
+        return dr2;
+}
+Dropki1 Dropki1::operator*(Dropki1 dr){
+    Dropki1 dr2;
+       dr2.imenitel = imenitel*dr.getImenitel();
+       dr2.broitel = broitel*dr.getBroitel();
+        return dr2;
+}
+Dropki1 Dropki1::operator/(Dropki1 dr){
+    Dropki1 dr2;
+      dr2.imenitel = imenitel*dr.getBroitel();
+      dr2.broitel = broitel*dr.getImenitel();
+        return dr2;
+}
+
+
+Dropki1 Dropki1::operator+(int i){
+    Dropki1 dr2;
+       dr2.broitel = broitel;
+       dr2.imenitel = i*broitel + imenitel;
+
+        return dr2;
+}
+Dropki1 Dropki1::operator-(int i){
+    Dropki1 dr2;
+       dr2.broitel = broitel;
+       dr2.imenitel = i*broitel - imenitel;
+
+        return dr2;
+}
+Dropki1 Dropki1::operator*(int i){
+    Dropki1 dr2;
+       dr2.broitel = broitel;
+       dr2.imenitel = imenitel*i;
+
+        return dr2;
+}
+Dropki1 Dropki1::operator/(int i){
+    Dropki1 dr2;
+       dr2.broitel = broitel*i;
+       dr2.imenitel = imenitel;
+
+        return dr2;
+}
+
+    int Dropki1::getImenitel (){
+        return imenitel;
+    }
+
+    int Dropki1::getBroitel () {
+        return broitel;
+    }
+
+    int Dropki1::nzd(int br1,int br2){
+        int priv;
+
+
+        while(1) {
+            if (br2 == 0)
+                return br1;
+            int priv = br1%br2;
+            br1 = br2;
+            br2 = priv;
+
+        }
+    }
+
+    int Dropki1::nzs(int br1, int br2){
+
+    return (br1 / nzd(br1, br2)) * br2;
+
+    }
+
+    void Dropki1::reduiraj (int i, int b) {
+        int br;
+        br = nzd(i,b);
+        imenitel = i / br;
+        broitel  = b / br;
+
+    }
+
+
+
+    void Dropki1::pecatiDropka (Dropki1 dr){
+        cout << dr.getImenitel() << "/" << dr.getBroitel() << endl;
+    }
+    void Dropki1::pecatiDecimalen(Dropki1 dr){
+        cout << (double) imenitel / broitel << endl;
+    }
 
