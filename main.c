@@ -3447,5 +3447,385 @@ ostream &operator<<(ostream& out,Complex &c1){
 
 }
 
+           **************************************************** PREDAVANJE 08 od CPP **********************************************************************
+           
+                      
+  //zadaca1
+                      
+  //main.cpp
+                      #include <iostream>
+#include "vraboten.h"
+#include "profesor.h"
+#include "asistent.h"
+#include "demonstrator.h"
+#define SIZE 100
+using namespace std;
+
+int main()
+{
+
+
+
+
+
+   int opcija = 10;
+    profesor *profesori = new profesor[SIZE];
+     asistent *asistenti = new asistent[SIZE];
+     demonstrator *demonstratori = new demonstrator[SIZE];
+     int indp=0,inda=0,indd=0;
+
+    while (opcija != 3){
+
+        cout << "Izberi " << endl;
+        cout << "1 - Dodaj vraboten " <<endl;
+        cout << "2 - Prikazi lista na vraboteni" << endl;
+        cout << "3 - Kraj" << endl;
+        cin >> opcija;
+
+        switch (opcija){
+
+        case 1:
+            {
+
+                int izbor;
+                cout << "vnesi tip na vraboten (1 - profesor, 2-asisten,3-demonstrator)"<< endl;
+                cin >> izbor;
+                if (izbor == 1){
+
+                    profesori[indp].postaviProfesor();
+                    indp++;
+
+                }
+                else if (izbor == 2){
+
+                    asistenti[inda].postaviAsistent();
+                    inda++;
+                }
+                else if(izbor == 3){
+
+                    demonstratori[indd].postaviDemonstrator();
+                    indd++;
+
+                }
+                else
+                    cout << "Greska IZbor" << endl;
+                break;
+            }
+        case 2:
+            {
+                cout << setw(20) << left << "Tip na vraboten"
+                     << setw(15) << left << "Ime"
+                     <<setw(15) << left << "Prezime"
+                     << setw(8) << left <<"Vrabot "
+                     << setw(20) << left << "Zvanje/r.vr"
+                     << setw(20) << left << "Oblast/Mentor"
+                     << setw(8) << left << "br/cas" << endl;
+                int i;
+                for (i =0;i < indp; i++){
+
+                        profesori[i].prikaziProfesor();
+                    }
+                for (i =0;i < inda; i++){
+
+                        asistenti[i].prikaziAsistent();
+                    }
+                for (i =0;i < indd; i++){
+
+                        demonstratori[i].prikaziDemonstrator();
+                    }
+
+            }
+            break;
+
+        }
+
+
+
+
+    }
+
+
+
+}
+//vraboten.h
+#ifndef VRABOTEN_H
+#define VRABOTEN_H
+#include <string.h>
+#include<iomanip>
+
+class vraboten
+{
+    public:
+        vraboten();
+
+        vraboten(char*,char*,int);
+        void postaviVraboten();
+        void prikaziVraboten();
+        void addVraboten();
+
+    protected:
+
+
+
+    private:
+        char *ime;
+        char *prezime;
+        int godVrab;
+};
+
+#endif // VRABOTEN_H
+//vraboten.cpp
+#include "vraboten.h"
+#include <string.h>
+#include<iostream>
+using namespace std;
+#include"profesor.h"
+#include"asistent.h"
+#include"demonstrator.h"
+#include <iomanip>
+
+vraboten::vraboten()
+{
+
+}
+vraboten::vraboten(char *ime,char *prezime,int godvrab ){
+
+
+}
+
+void vraboten::postaviVraboten() {
+
+ char name[15];
+    char sname[15];
+    int a;
+    cout << "Vnesi ime: " << endl;
+    cin >> name;
+    cout << "vnesi prezime: " << endl;
+    cin >> sname;
+    cout << "Vnesi godina na vrabotuvanje: " << endl;
+    cin >> a;
+    godVrab = a;
+
+    ime = new char[strlen(name)+1];
+    strcpy(ime,name);
+    prezime = new char[strlen(sname)+1];
+    strcpy(prezime,sname);
+
+
+}
+void vraboten::prikaziVraboten(){
+    cout << setw(15) << left << ime
+         << setw(15) << left << prezime
+         << setw(8) << left << godVrab;
+}
+//profesor.h
+
+#ifndef PROFESOR_H
+#define PROFESOR_H
+#include "vraboten.h"
+
+
+class profesor : public vraboten
+{
+    public:
+        profesor();
+        profesor(char *,char *, int, char *, char*, int);
+        ~profesor(){}
+
+
+        void postaviProfesor();
+        void prikaziProfesor();
+        int getBrPred(){
+            return brPred;
+        }
+
+
+    private:
+        char *zvanje;
+        char *oblast;
+        int brPred;
+};
+
+#endif // PROFESOR_H
+
+//profesor.cpp
+
+#include "profesor.h"
+#include <iostream>
+using namespace std;
+#include<iomanip>
+
+profesor::profesor()
+{
+
+}
+profesor:: profesor(char *ime,char *prezime, int godVrab, char *oblast, char*zvanje, int brPred) : vraboten(ime,prezime,godVrab){
+
+
+}
+
+void profesor::postaviProfesor(){
+    postaviVraboten();
+
+    char zv[15];
+    char ob[15];
+    int brPr;
+    cout << "Vnesi zvanje: " << endl;
+    cin >> zv;
+    cout << "vnesi oblast: " << endl;
+    cin >> ob;
+    cout << "Vnesi broj na casovi: " << endl;
+    cin >> brPr;
+    brPred = brPr;
+
+    zvanje = new char[strlen(zv)+1];
+    strcpy(zvanje,zv);
+    oblast = new char[strlen(ob)+1];
+    strcpy(oblast,ob);
+
+}
+
+void profesor::prikaziProfesor(){
+
+    cout << setw(20) << left << "Profesor";
+    prikaziVraboten();
+    cout << setw(20) << left << zvanje
+         << setw(20) << left << oblast
+         << setw(5) << left << brPred << endl;
+
+}
+
+//asistent.h
+#ifndef ASISTENT_H
+#define ASISTENT_H
+#include "vraboten.h"
+
+class asistent : public vraboten
+{
+    public:
+         asistent();
+        asistent(char *,char *, int, char *, char*, int);
+
+
+
+        void postaviAsistent();
+        void prikaziAsistent();
+
+
+    protected:
+
+    private:
+        char *zvanjea;
+        char *mentora;
+        int brPreda;
+};
+
+#endif // ASISTENT_H
+
+//asistent.cpp
+#include "asistent.h"
+#include "vraboten.h"
+using namespace std;
+#include <iostream>
+asistent::asistent()
+{
+
+}
+asistent:: asistent(char *ime,char *prezime, int godVrab, char *mentora, char*zvanjea, int brPreda) : vraboten(ime,prezime, godVrab){
+
+
+}
+
+void asistent::postaviAsistent(){
+    postaviVraboten();
+
+    char zv[15];
+    char me[15];
+    int brPr;
+    cout << "Vnesi zvanje: " << endl;
+    cin >> zv;
+    cout << "vnesi mentor: " << endl;
+    cin >> me;
+    cout << "Vnesi broj na casovi: " << endl;
+    cin >> brPr;
+    brPreda = brPr;
+
+    zvanjea = new char[strlen(zv)+1];
+    strcpy(zvanjea,zv);
+    mentora = new char[strlen(me)+1];
+    strcpy(mentora,me);
+
+}
+
+void asistent::prikaziAsistent(){
+    cout << setw(20) << "Asistent";
+    prikaziVraboten();
+    cout << setw(20) << left << zvanjea
+         << setw(20) << left << mentora
+         << setw(5) << left << brPreda << endl;
+}
+
+//demonstrator.h
+#ifndef DEMONSTRATOR_H
+#define DEMONSTRATOR_H
+#include "vraboten.h"
+
+
+class demonstrator : public vraboten
+{
+    public:
+        demonstrator();
+        demonstrator(char *,char*,int,char*);
+
+
+        void postaviDemonstrator();
+        void prikaziDemonstrator();
+
+
+
+    private:
+        char *rabVr;
+};
+
+#endif // DEMONSTRATOR_H
+//demonstrator.cpp
+
+#include "demonstrator.h"
+#include <string.h>
+#include <iostream>
+using namespace std;
+
+demonstrator::demonstrator()
+{
+
+}
+demonstrator::demonstrator(char *ime,char *prezime,int godVrab,char *rabVr) : vraboten (ime,prezime,godVrab)
+{
+
+
+
+}
+
+void demonstrator::postaviDemonstrator(){
+
+    postaviVraboten();
+    char rabotVrem[30];
+    cout << "vensi rabotno vreme(od-do): " << endl;
+    cin >> rabotVrem;
+    rabVr = new char[strlen(rabotVrem) +1 ];
+    strcpy(rabVr,rabotVrem);
+
+}
+
+void demonstrator::prikaziDemonstrator(){
+        cout << setw(20) << left << "Demonstrator";
+        prikaziVraboten();
+        cout << setw(20) << left << rabVr << endl;
+
+
+}
+
+
+
 
 
