@@ -3825,6 +3825,380 @@ void demonstrator::prikaziDemonstrator(){
 
 }
 
+           **************************************************** PREDAVANJE 10 od CPP **********************************************************************
+           
+// vo main.cpp
+                      
+#include <iostream>
+#include "artikl.h"
+#include "pantoloni.h"
+#include "kosuli.h"
+#include "datum.h"
+using namespace std;
+#define SIZE 100
+void tabela(){
+            cout << setw(20) << left << "Tip na artikl"
+                 << setw(15) << left << "Ime"
+                 << setw(10) << left << "golemina"
+                 << setw(7) << left << "cena"
+                 << setw(15) << left << "datum na donesuvanje" << endl;
+
+        }
+int presmetajDen(datum *denes, datum mesec){
+     int razlika,n,m,k=0,j=0;
+     static const int denoviVoMesec [13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+     n = mesec.getMesec();
+     for (int i=1; i<n; i++){
+        k = k + denoviVoMesec[i];
+     }
+     k = k + mesec.getDen();
+
+     m = denes->getMesec();
+     for (int i=1; i<m; i++){
+        j = j + denoviVoMesec[i];
+     }
+     j = j+denes->getDen();
+
+     razlika = k-j ;
+
+     return razlika;
+
+}
+int main()
+{
+    pantoloni *pantol = new pantoloni[SIZE];
+    kosuli *kosul = new kosuli[SIZE];
+    datum *denesenDatum;
+
+
+
+
+
+    int indp = 0, indk = 0;
+    int opcija =10;
+    int a;
+    double cena = 0;
+
+
+
+    while (opcija != 5){
+        cout << "1 - Dodadi artikl" << endl;
+        cout << "2 - Prikazi artikl" << endl;
+        cout << "3 - Prikazi site artikli" << endl;
+        cout << "4 - Prikazi artikli koi treba da stignat za 1 nedela" << endl;
+        cout << "5 - Kraj" << endl;
+        cin >> opcija;
+
+        switch (opcija) {
+
+        case 1:
+            cout << "izberi tip na artikl (0 - pantoloni, 1 - kosuli): ";
+            cin >> a;
+                switch (a){
+            case 0:
+                pantol[indp].postaviPantoloni();
+                indp++;
+                break;
+            case 1:
+                kosul[indk].postaviKosuli();
+                indk++;
+                break;
+                 default : cout << "gresen izbor "<<endl;
+                }
+                break;
+
+        case 2:
+            cout << "izberi tip na artikl (0 - pantoloni, 1 - kosuli): ";
+            cin >> a;
+                switch (a){
+            case 0:
+                tabela();
+
+                for (int i=0; i < indp; i++){
+                pantol[i].prikaziPantoloni();
+
+                }
+
+                break;
+            case 1:
+                tabela();
+                 for (int i=0; i < indk; i++){
+                kosul[i].prikaziKosuli();
+                 }
+
+                break;
+                 default : cout << "gresen izbor "<<endl;
+                }
+              break;
+
+
+
+        case 3:
+            tabela();
+              for (int i=0; i < indp; i++){
+                pantol[i].prikaziPantoloni();
+                 cena = cena + pantol[i].getCena();
+              }
+
+              for (int i=0; i < indk; i++){
+                kosul[i].prikaziKosuli();
+                 cena = cena + kosul[i].getCena();
+              }
+
+              cout << "Vkupna cena na site proizvodi:  " << cena << endl;
+               break;
+
+
+        case 4:
+            int d,m,y;
+            int raz;
+            cout << "Vnesi denesen datum (DD/MM/YYYY): ";
+            cin >> d;
+            cin.get();
+            cin >> m;
+            cin.get();
+            cin >> y;
+            denesenDatum = new datum(d,m,y);
+            tabela();
+            for (int i=0; i<indp; i++){
+                raz = presmetajDen(denesenDatum,pantol[i].getSlNab());
+                if (raz < 7 && raz > 0)
+                    pantol[i].prikaziPantoloni();
+
+            }
+            for(int i=0; i<indk; i++){
+
+                raz = presmetajDen(denesenDatum,kosul[i].getDatum());
+                if (raz > -30 && raz < -23)
+                    kosul[i].prikaziKosuli();
+            }
+
+        }
+
+
+    }
+
+
+
+
+}
+
+// vo artikl.h
+#ifndef ARTIKL_H
+#define ARTIKL_H
+#include "datum.h"
+#include<iomanip>
+#include <iostream>
+
+
+class artikl
+{
+    public:
+        artikl();
+        artikl(char* ,char*,double,datum*);
+        void postaviArtikl();
+        void prikaziArtikl();
+        datum getDatum(){
+            return *donesen;
+        }
+        double getCena(){
+            return cena;
+        }
+
+
+
+    private:
+        char *ime;
+        char *golemina;
+        double cena;
+        datum *donesen;
+
+};
+
+#endif // ARTIKL_H
+
+// vo artikl.cpp
+
+#include "artikl.h"
+#include <string.h>
+#include<iostream>
+#include "datum.h"
+#include<iomanip>
+using namespace std;
+
+artikl::artikl()
+{
+
+}
+artikl::artikl(char *imek,char*golk,double cenak,datum *donesenk) : ime(imek),golemina(golk),cena(cenak),donesen(donesenk)
+{
+
+}
+void artikl::postaviArtikl(){
+    char name [15];
+    char gol [5];
+    double ce;
+    datum *don;
+    int d,m,y;
+
+    cout << "Vnesi ime na artiklot: ";
+    cin >> name;
+    cout << "Vnesi golemina: ";
+    cin >> gol;
+    cout << "Vensi cena: ";
+    cin >> ce;
+    cout << "Vnesi datum na donesuvanje(DD/MM/YYYY): ";
+    cin >> d;
+    cin.get();
+    cin >> m;
+    cin.get();
+    cin >> y;
+
+    ime = new char [strlen(name)+1] ;
+    strcpy(ime,name);
+    golemina = new char[strlen(gol) +1];
+    strcpy(golemina,gol);
+    cena = ce;
+    don = new datum(d,m,y);
+    donesen = don;
+
+}
+
+void artikl::prikaziArtikl(){
+
+    cout << setw(15) << left << ime
+         << setw(10) << left << golemina
+         << setw(7) << left << cena;
+         donesen->prikaziDatum();
+
+
+}
+
+/*artikl::~artikl()
+{
+    //dtor
+}*/
+
+// pantoloni.h
+
+#ifndef PANTOLONI_H
+#define PANTOLONI_H
+#include"datum.h"
+#include "artikl.h"
+
+
+class pantoloni : public artikl
+{
+    public:
+        pantoloni();
+        pantoloni(char*,char*,double,datum*,datum*);
+        void postaviPantoloni();
+        void prikaziPantoloni();
+        datum getSlNab() {
+            return *slNab;
+        }
+
+
+
+    private:
+        datum *slNab;
+};
+
+#endif // PANTOLONI_H
+
+// pantoloni.cpp
+#include "pantoloni.h"
+#include "artikl.h"
+using namespace std;
+#include<iostream>
+pantoloni::pantoloni()
+{
+    //ctor
+}
+pantoloni::pantoloni(char *imek,char*golk,double cenak,datum *donesenk,datum *slnabk) : artikl(imek,golk,cenak,donesenk)
+{
+
+}
+void pantoloni::postaviPantoloni(){
+    postaviArtikl();
+    datum *da;
+    int d,m,y;
+    cout << "Vnesi datum za sledna nabavka(DD/MM/YYYY): ";
+    cin >> d;
+    cin.get();
+    cin >> m;
+    cin.get();
+    cin >> y;
+    da = new datum(d,m,y);
+    slNab = da;
+
+}
+void pantoloni::prikaziPantoloni(){
+
+     cout << setw(20) << "Pantoloni";
+    prikaziArtikl();
+    cout << endl;
+
+}
+
+/*pantoloni::~pantoloni()
+{
+    //dtor
+}*/
+
+// kosuli.h
+
+#ifndef KOSULI_H
+#define KOSULI_H
+#include"artikl.h"
+
+
+class kosuli : public artikl
+{
+    public:
+          kosuli();
+          kosuli(char* ,char*,double,datum*);
+          void prikaziKosuli();
+          void postaviKosuli();
+
+
+    protected:
+
+    private:
+};
+
+#endif // KOSULI_H
+
+// kosuli.cpp
+#include "kosuli.h"
+
+kosuli::kosuli()
+{
+
+}
+kosuli::kosuli(char *imek,char*golk,double cenak,datum *donesenk) : artikl(imek,golk,cenak,donesenk)
+{
+
+
+}
+void kosuli:: postaviKosuli(){
+    postaviArtikl();
+}
+void kosuli::prikaziKosuli () {
+
+
+    cout << setw(20) << "Kosula";
+     prikaziArtikl();
+    cout << endl;
+
+}
+
+/*kosuli::~kosuli()
+{
+    //dtor
+}*/
+
+
 
 
 
