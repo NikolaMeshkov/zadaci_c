@@ -3825,7 +3825,7 @@ void demonstrator::prikaziDemonstrator(){
 
 }
 
-           **************************************************** PREDAVANJE 10 od CPP **********************************************************************
+           **************************************************** PREDAVANJE 11 od CPP **********************************************************************
            
 // vo main.cpp
                       
@@ -4198,8 +4198,469 @@ void kosuli::prikaziKosuli () {
     //dtor
 }*/
 
+           **************************************************** PREDAVANJE 13 od CPP **********************************************************************
+
+// main.cpp
+
+#include <iostream>
+#include "zivotno.h"
+#include "vlekaci.h"
+#include "ptici.h"
+#include "cicaci.h"
+using namespace std;
+
+ tabela(){
+        cout  <<  setw(18) << left << "tip na zivotno"
+              <<  setw(18) << left << "datum na raganje"
+              <<  setw(18) << left <<"datum na dones"
+              <<  setw(5) << left <<"pol"
+              <<  setw(10) << left <<"ime"
+              <<  setw(20) << left <<"datum na pos. vak"  << endl;
+            return 0;
+      }
 
 
+int main()
+{
+   int opcija =10;
+   int bc =0 ,bp=0,bv=0;
+    char tip;
+   vlekaci *vlekac = new vlekaci[100];
+   ptici *ptica = new ptici[100];
+   cicaci *cicac = new cicaci[100];
+
+   while (opcija != 6){
+
+        cout << "1 - Dodadi zivotno " << endl;
+        cout << "2 - Prikazuvanje na brojna sostojba" << endl;
+        cout << "3 - Prikazuvanje na zivotni od dadena gurpa: " << endl;
+        cout << "4 - Prikazuvanje na site zivotni" << endl;
+        cout << "5 - Prikazuvanje na zivotni koi treba da se vakciniraat vo rok od edna nedela" << endl;
+        cout << "6 - Kraj" << endl;
+        cin >> opcija;
+
+        switch (opcija) {
+            case 1:
+
+                cout << "Vnesi tip na zivotno (c - cicaci, p-ptici,v-vlekaci): " << endl;
+                cin >> tip;
+                if (tip == 'c'){
+                    cicac[bc].postaviCicaci();
+                    bc++;
+                }
+                else if (tip == 'p'){
+                    ptica[bp].postaviPtici();
+                    bp++;
+                }
+                else if (tip == 'v'){
+                    vlekac[bv].postaviVlekaci();
+                    bv++;
+                }
+                break;
+            case 2:
+                cout << "Ptici: " << bp << endl << "Vlekaci: " << bv << endl << "Cicaci: " << bc << endl << "Vkupno: " << bv+bc+bp << endl;
+                break;
+
+            case 3:
+                cout << "Vnesete grupa koja sakate da se prikazi (c-cicaci,v-vlekaci,p-ptici)" << endl;
+                cin >> tip;
+                tabela();
+                if (tip == 'c'){
+                    for (int i=0;i < bc; i++){
+                        cicac[i].prikaziCicaci();
+                    }
+                }
+                else if (tip == 'v'){
+                    for (int i=0;i < bv; i++){
+                        vlekac[i].prikaziVlekaci();
+                    }
+                }
+                else if (tip == 'p'){
+                    for (int i=0;i < bp; i++){
+                        ptica[i].prikaziPtici();
+                    }
+                }
+                break;
+
+            case 4:
+                tabela();
+                for (int i=0; i < bp; i++)
+                {
+                    ptica[i].prikaziPtici();
+                }
+                for (int i=0; i < bv; i++)
+                {
+                    vlekac[i].prikaziVlekaci();
+                }
+                for (int i=0; i < bc; i++)
+                {
+                    cicac[i].prikaziCicaci();
+                }
+                break;
+
+            case 5:
+                int d,m,g;
+
+                datum *denesen;
+                cout << "Vnesete denesen datum(dd/mm/gggg): " << endl;
+                cin >> d;
+                cin.get();
+                cin >> m;
+                cin.get();
+                cin >> g;
+                denesen = new datum(d,m,g);
+                tabela();
+                for (int i=0; i < bc; i++){
+                    if (cicac[i].presmetajVakcinacija(denesen) < 7 && cicac[i].presmetajVakcinacija(denesen) > 0 )
+                        cicac[i].prikaziCicaci();
+                }
+                for (int i=0; i < bp; i++){
+                    if (ptica[i].presmetajVakcinacija(denesen) < 7 && ptica[i].presmetajVakcinacija(denesen) > 0)
+                        ptica[i].prikaziPtici();
+                }
+                for (int i=0; i < bc; i++){
+                    if (vlekac[i].presmetajVakcinacija(denesen) < 7 && vlekac[i].presmetajVakcinacija(denesen) > 0)
+                        vlekac[i].prikaziVlekaci();
+                }
+                break;
+
+                default: cout << "Greska!!" << endl;
+
+       }
+
+
+
+   }
+
+}
+
+// zivotno.h
+
+#ifndef ZIVOTNO_H
+#define ZIVOTNO_H
+#include "datum.h"
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+class zivotno
+{
+    public:
+      zivotno();
+      void postaviZivotno();
+      void prikaziZivotno();
+
+
+    virtual int presmetajVakcinacija (datum *)=0;
+
+    protected:
+
+        datum *datRag;
+        datum *datDones;
+        char pol;
+        char *ime;
+        datum *datPoslednaVak;
+};
+
+#endif // ZIVOTNO_H
+
+// zivotno.cpp
+
+#include "zivotno.h"
+#include <iostream>
+#include <cstdio>
+#include <string.h>
+#include <iomanip>
+using namespace std;
+
+zivotno::zivotno()
+{
+
+}
+
+void zivotno::postaviZivotno(){
+    int a,b,c;
+    char name[20];
+    cout << "Vnesete datum na ragjanje(dd/mm/yyyy):" <<endl;
+    cin >> a;
+    cin.get();
+    cin >> b;
+    cin.get();
+    cin >> c;
+
+    datRag = new datum(a,b,c);
+
+    cout << "Vnesete datum na donesuvanje (dd/mm/yyyy):" <<endl;
+    cin >> a;
+    cin.get();
+    cin >> b;
+    cin.get();
+    cin >> c;
+
+    datDones = new datum(a,b,c);
+
+    cout << "Vnesete pol(m/z): " << endl;
+    cin >> pol;
+
+    cout << "Vnesete ime na zivotno: " << endl;
+    cin >> name;
+    ime = new char [strlen(name)+ 1 ];
+    strcpy(ime,name);
+
+    cout << "Vnesete datum na posledna vakcinacija (dd/mm/yyyy):" <<endl;
+    cin >> a;
+    cin.get();
+    cin >> b;
+    cin.get();
+    cin >> c;
+
+    datPoslednaVak = new datum(a,b,c);
+
+
+}
+
+void zivotno::prikaziZivotno(){
+
+     datDones->prikaziDatum();
+     cout << "        ";
+     datRag ->prikaziDatum();
+     cout << "        ";
+     cout << setw(5) << left << pol << setw(10) << ime;
+     datPoslednaVak->prikaziDatum();
+     cout << endl;
+
+}
+
+// vlekaci.h
+#ifndef VLEKACI_H
+#define VLEKACI_H
+#include "zivotno.h"
+#include "datum.h"
+
+
+class vlekaci :  public zivotno
+{
+    public:
+        vlekaci();
+        void postaviVlekaci();
+        void prikaziVlekaci();
+        int presmetajVakcinacija(datum *);
+
+
+    private:
+        datum *datSlVak;
+};
+
+#endif // VLEKACI_H
+// vlekaci.cpp
+
+#include "vlekaci.h"
+#include <iostream>
+#include <iomanip>
+
+vlekaci::vlekaci()
+{
+    //ctor
+}
+void vlekaci::postaviVlekaci(){
+    int a,b,c;
+    postaviZivotno();
+     cout << "Vnesete datum na sledna vakcinacija (dd/mm/yyyy):" <<endl;
+    cin >> a;
+    cin.get();
+    cin >> b;
+    cin.get();
+    cin >> c;
+
+    datSlVak = new datum(a,b,c);
+
+}
+
+void vlekaci::prikaziVlekaci(){
+
+    cout << setw(18) << "vlekac";
+    prikaziZivotno();
+
+
+}
+
+int vlekaci::presmetajVakcinacija (datum *d){
+
+    int denD=0,denV=0,razlika =0;
+
+
+
+    static const int denoviVoMesec [13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+    for (int i=1 ; i < d->getMesec(); i++)
+    {
+        denD = denD + denoviVoMesec[i];
+    }
+        denD = denD + d->getDen();
+        denD = denD + (d->getGod()*365);
+
+    for (int i=1;i < datSlVak->getMesec(); i++)
+    {
+        denV = denV + denoviVoMesec[i];
+    }
+        denV = denV + datSlVak ->getDen();
+        denV = denV + (datSlVak ->getGod()*365);
+
+
+        razlika = denV - denD;
+    return razlika;
+}
+
+
+/*vlekaci::~vlekaci()
+{
+    //dtor
+}*/
+
+// ptici.h
+
+#ifndef PTICI_H
+#define PTICI_H
+#include "zivotno.h"
+
+
+class ptici : public zivotno
+{
+    public:
+        ptici();
+        void postaviPtici();
+        void prikaziPtici();
+        int presmetajVakcinacija(datum *);
+
+
+    private:
+        char Letac;
+};
+
+#endif // PTICI_H
+
+//ptici.cpp
+#include "ptici.h"
+
+ptici::ptici()
+{
+    //ctor
+}
+
+void ptici::postaviPtici() {
+    postaviZivotno();
+    cout << "Dali pticata e letac(d/n): " << endl;
+    cin >> Letac;
+
+}
+void ptici::prikaziPtici(){
+
+       cout << setw(18) << left << "ptica";
+       prikaziZivotno();
+
+}
+int ptici::presmetajVakcinacija(datum *d) {
+     int denD=0,denV=0,razlika =0;
+     datum *datSlVak;
+
+    datSlVak = new datum(datPoslednaVak->getDen()
+                         ,datPoslednaVak->getMesec() <= 6 ? (datPoslednaVak->getMesec() + 6) : ((datPoslednaVak->getMesec() + 6) % 12)
+                         , ((datPoslednaVak->getMesec() <= 6) ? (datPoslednaVak->getGod()) : (datPoslednaVak->getGod() +1)));
+    static const int denoviVoMesec [13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+    for (int i=1 ; i < d->getMesec(); i++)
+    {
+        denD = denD + denoviVoMesec[i];
+    }
+        denD = denD + d->getDen();
+        denD = denD + (d->getGod()*365);
+
+    for (int i=1; i < datSlVak->getMesec(); i++)
+    {
+        denV = denV + denoviVoMesec[i];
+    }
+        denV = denV + datSlVak->getDen();
+        denV = denV + (datSlVak ->getGod()*365);
+
+
+        razlika = denV - denD;
+
+    return razlika;
+
+
+}
+/*ptici::~ptici()
+{
+    //dtor
+}*/
+
+// cicaci.h
+
+#ifndef CICACI_H
+#define CICACI_H
+#include<zivotno.h>
+
+
+class cicaci : public zivotno
+{
+    public:
+        cicaci();
+        void postaviCicaci();
+        void prikaziCicaci();
+        int presmetajVakcinacija(datum *);
+
+
+
+    private:
+        char prezi;
+};
+
+#endif // CICACI_H
+
+// cicaci.cpp
+
+#include "cicaci.h"
+
+cicaci::cicaci()
+{
+    //ctor
+}
+
+void cicaci::postaviCicaci(){
+    postaviZivotno();
+    cout << "Dali e prezivar (d/n): " << endl;
+    cin >> prezi;
+
+}
+void cicaci::prikaziCicaci(){
+    cout << setw(18) << left << "cicac";
+    prikaziZivotno();
+}
+
+int cicaci::presmetajVakcinacija(datum *d){
+     int denD=0,denV=0,razlika =0;
+    datum *datSlVak;
+
+    datSlVak = new datum(datPoslednaVak->getDen(),datPoslednaVak->getMesec(),datPoslednaVak->getGod() +1);
+    static const int denoviVoMesec [13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+    for (int i=1 ; i < d->getMesec(); i++)
+    {
+        denD = denD + denoviVoMesec[i];
+    }
+        denD = denD + d->getDen();
+        denD = denD + (d->getGod()*365);
+
+    for (int i=1; i < datSlVak->getMesec(); i++)
+    {
+        denV = denV + denoviVoMesec[i];
+    }
+        denV = denV + datSlVak ->getDen();
+        denV = denV + (datSlVak ->getGod()*365);
+
+
+        razlika = denV - denD;
+    return razlika;
+
+}
+//
 
 
 
